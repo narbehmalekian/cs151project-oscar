@@ -17,7 +17,8 @@ class CircleNode {
       try
       {
         let clone = new CircleNode(this.color)
-		Object.assign(clone, this)
+		clone.x = x
+		clone.y = y
 		return clone
       }
       catch { return null }
