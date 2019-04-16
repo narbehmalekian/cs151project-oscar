@@ -1,6 +1,11 @@
 'use strict'
+const edgeModule = require('./EdgeInterface')
 
-class AbstractEdge {
+/**
+   A class that supplies convenience implementations for 
+   a number of methods in the Edge interface
+*/
+class AbstractEdge extends edgeModule.EdgeInterface {
    constructor() {
 	   this.start = undefined
 	   this.end = undefined
@@ -55,5 +60,9 @@ class AbstractEdge {
 	  let startCenter = { x: endBounds.x + (endBounds.width / 2), y: endBounds.y + (endBounds.height / 2) }
       return { x1: start.getConnectionPoint(endCenter).x, y1: start.getConnectionPoint(endCenter).y, x2: end.getConnectionPoint(startCenter).x,
 		y2: end.getConnectionPoint(startCenter).y }
+   }
+   
+   draw(){
+	   throw new Error('This must be implemented in a subclass!')
    }
 }

@@ -1,9 +1,11 @@
 'use strict'
 
+const nodeModule = require('./NodeInterface')
 /**
-   A circular node that is filled with a color.
+   A class that supplies convenience implementations for 
+   a number of methods in the Node interface
 */
-class CircleNode {
+class AbstractNode extends nodeModule.NodeInterface{
    static DEFAULT_SIZE() { return 20 }
    constructor(aColor){
       this.size = DEFAULT_SIZE()
@@ -24,10 +26,8 @@ class CircleNode {
       catch { return null }
    }
 
-   draw()
+   draw(panel)
    {
-	  const panel = document.getElementById('graphpanel')
-	  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 	  circle.setAttribute('cx', this.x + this.size / 2)
       circle.setAttribute('cy', this.y + this.size / 2)
       circle.setAttribute('r', this.size / 2)
@@ -65,3 +65,4 @@ class CircleNode {
 	  }
    }
 }
+
