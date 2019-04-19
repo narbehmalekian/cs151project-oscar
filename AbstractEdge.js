@@ -31,6 +31,7 @@ class AbstractEdge extends edgeModule.EdgeInterface {
 		  this.start = s
 		  this.end = e
 	   }
+	   else throw new Error('Parameters must be nodes')
    }
 
    getStart(){ return this.start }
@@ -65,4 +66,5 @@ class AbstractEdge extends edgeModule.EdgeInterface {
    draw(){
 	   throw new Error('This must be implemented in a subclass!')
    }
+   contains(p){}
 }

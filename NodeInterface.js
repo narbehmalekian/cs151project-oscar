@@ -95,7 +95,7 @@ class NodeInterface {
       @param g2 the graphics context
       @param grid the grid to snap to
    */
-   layout(g, panel, grid){
+   layout(g, grid){
 	  throw new Error('Must be implmented by subclass!') 
    }
 
