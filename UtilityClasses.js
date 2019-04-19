@@ -1,25 +1,58 @@
 'use strict'
 
-
 class Rectangle {
 	constructor() {
-		this.xPoints = [0, 0, 0, 0]
-		this.yPoints = [0, 0, 0, 0]
+		this.x = 0
+		this.y = 0
+		this.width = 0
+		this.height = 0
 	}
-	setRectPoints(xPoints, yPoints){
-		this.xPoints = xPoints
-		this.yPoints = yPoints
+	setRect(x, y, width, height){
+		this.x = x
+		this.y = y
+		this.width = width
+		this.height = height
+	}
+	setLocation(x, y){
+		this.x = x
+		this.y = y
+	}
+	setWidth(width){
+		this.width = width
+	}
+	setHeight(height){
+		this.height = height
 	}
 	getWidth(){
-		return this.xPoints[1] - this.xPoints[0]
+		return width
 	}
 	getHeight(){
-		return this.yPoints[4] - this.yPoints[0]
+		return height
 	}
-	getTopLeft(){
-		let p = new Point();
-		p.setPoint(xPoints[0], yPoints[0])
-		return p
+	getX(){
+		return this.x
+	}
+	getY(){
+		return this.y
+	}
+	add(r){
+		let x1 = Math.min(getMinX(), r.getMinX());
+		let x2 = Math.max(getMaxX(), r.getMaxX());
+		let y1 = Math.min(getMinY(), r.getMinY());
+		let y2 = Math.max(getMaxY(), r.getMaxY());
+		setRect(x1, y1, x2 - x1, y2 - y1);
+	}
+	getMinX(){
+		return getX()
+	}
+	getMinY(){
+		return getY()
+	}
+	getMaxX(){
+		get
+	}
+	getMaxY(){
+		
 	}
 }
 

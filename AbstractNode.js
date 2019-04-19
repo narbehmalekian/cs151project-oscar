@@ -108,5 +108,11 @@ class AbstractNode extends nodeModule.NodeInterface{
    draw()
    {
    }
+   static getShadowGap(){
+	   return 'gray'
+   }
+   static getShadowGap(){
+	   return 4
+   }
 }
 
