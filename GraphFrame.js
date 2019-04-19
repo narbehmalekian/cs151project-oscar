@@ -23,7 +23,11 @@ function drawGrabber(x, y)
 }
 
 class CircleNode extends abstractNode.AbstractNode{
-    constructor() { super() }
+    constructor() { 
+		this.x = 0
+		this.y = 0
+		this.size = 20
+	}
     getBounds(){
         let rect = new Rectangle()
 		rect.setRect(this.x, this.y, this.width, this.height)
@@ -31,7 +35,7 @@ class CircleNode extends abstractNode.AbstractNode{
       }
 	clone() { return super.clone() }
     contains(p){
-      return (this.x + this.size / 2 - p.x) ** 2 + (this.y + this.size / 2 - p.y) ** 2 <= this.size ** 2 / 4
+      return (this.x + this.size / 2 - p.getX()) ** 2 + (this.y + this.size / 2 - p.getY()) ** 2 <= this.size ** 2 / 4
     }
     translate(dx, dy) {
       this.x += dx
@@ -40,15 +44,15 @@ class CircleNode extends abstractNode.AbstractNode{
     draw(){
       const panel = document.getElementById('graphpanel')
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-      circle.setAttribute('cx', x + size / 2)
-      circle.setAttribute('cy', y + size / 2)
-      circle.setAttribute('r', size / 2)
-      circle.setAttribute('fill', color)
+      circle.setAttribute('cx', this.x + this.size / 2)
+      circle.setAttribute('cy', this.y + this.size / 2)
+      circle.setAttribute('r', this.size / 2)
+      circle.setAttribute('fill', 'black')
       panel.appendChild(circle)
     }
 	getConnectionPoint(other){
-	  let centerX = x + size / 2
-      let centerY = y + size / 2
+	  let centerX = x + this.size / 2
+      let centerY = y + this.size / 2
       let dx = other.getX() - centerX
       let dy = other.getY() - centerY
       let distance = Math.sqrt(dx * dx + dy * dy)
@@ -61,15 +65,18 @@ class CircleNode extends abstractNode.AbstractNode{
 	}
  }
 
-
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
+  const n1 = createCircleNode(10, 10, 5, 'black')
+  let p = new Point()
+  p.setPoint(10, 10)
+  graph.addNode(n1, p)
+  graph.draw()
   let selectedItems = []
   let lastSelected = null
   let selectedButton = null
   let mouseDownPoint = null
   let lastMousePoint = null
-  graph.draw()
   
   const panel = document.getElementById('graphpanel')
   const toolbar = document.getElementByClassName('toolbar')[0]

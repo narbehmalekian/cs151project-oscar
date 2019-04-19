@@ -1,3 +1,9 @@
 #graphpanel {
     border: solid black thin;
 }
+
+#toolbutton {
+	width: 15%;
+	size: 20%;
+	display: inline-block;
+}

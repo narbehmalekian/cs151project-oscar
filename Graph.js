@@ -13,7 +13,6 @@ class Graph {
       this.edges = []
       this.nodesToBeRemoved = []
       this.edgesToBeRemoved = []
-      this.needsLayout = true
 	  this.minBounds = new Rectangle()
    }
 
@@ -37,40 +36,10 @@ class Graph {
             this.edges.push(e)
             if (!this.nodes.contains(e.getEnd()))
                this.nodes.push(e.getEnd())
-            this.needsLayout = true
             return true
          }
       }
       return false
-   }
-
-   /**
-      Adds a node to the graph so that the top left corner of
-      the bounding rectangle is at the given point.
-      @param n the node to add
-      @param p the desired location
-   */
-   add(n, p)
-   {
-      let bounds = n.getBounds()
-      n.translate(p.getX() - bounds.getX(), p.getY() - bounds.getY())
-
-      let accepted = false
-      let insideANode = false
-      for (let i = this.nodes.length - 1; i >= 0 && !accepted; i--)
-      {
-         let parentNode = this.nodes[i]
-         if (parentNode.contains(p)) 
-         {
-            insideANode = true
-            if (parentNode.addNode(n, p)) accepted = true
-         }
-      }
-      if (insideANode && !accepted) 
-         return false
-      this.nodes.push(n)
-      this.needsLayout = true
-      return true
    }
 
    /**
@@ -108,7 +77,6 @@ class Graph {
    */
    draw()
    {
-      layout();
 
       for (let i = 0; i < this.nodes.length; i++)
       {
@@ -200,7 +168,7 @@ class Graph {
    addNode(n, p)
    {
 	  if (n.isNode()){
-		  bounds = n.getBounds();
+		  let bounds = n.getBounds();
 		  n.translate(p.getX() - bounds.getX(), 
 			 p.getY() - bounds.getY())
 		  this.nodes.push(n)
