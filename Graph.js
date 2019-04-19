@@ -105,11 +105,10 @@ class Graph {
    
    /**
       Draws the graph
-      @param g the grid
    */
-   draw(g)
+   draw()
    {
-      layout(g);
+      layout();
 
       for (let i = 0; i < this.nodes.length; i++)
       {
@@ -131,22 +130,14 @@ class Graph {
    removeNode(n)
    {
 	  
-      if (this.nodesToBeRemoved.contains(n)) return
-      this.nodesToBeRemoved.push(n);
-      // notify nodes of removals
-      for (let i = 0; i < this.nodes.length; i++)
-      {
-         let n2 = node[i]
-         n2.removeNode(this, n)
-      }
       for (let i = 0; i < this.edges.length; i++)
       {
          let e = this.edges[i]
          if (e.getStart() === n || e.getEnd() === n)
             removeEdge(e)
       }
-
-      this.needsLayout = true
+	  let index = this.nodes.indexOf(n)
+	  this.nodes.splice(index, 1)
    }
 
    /**
@@ -155,49 +146,9 @@ class Graph {
    */
    removeEdge(e)
    {
-      if (this.edgesToBeRemoved.contains(e)) return
-      this.edgesToBeRemoved.push(e)
-      for (let i = this.nodes.length - 1; i >= 0; i--)
-      {
-         let n = this.nodes[i]
-         n.removeEdge(this, e)
-      }
-      this.needsLayout = true
+      this.edges.splice(this.edges.indeOf(e), 1)
    }
 
-   /**
-      Causes the layout of the graph to be recomputed.
-   */
-   layout()
-   {
-      this.needsLayout = true
-   }
-
-   /**
-      Computes the layout of the graph.
-      @param g the grid to snap to
-   */
-   layout(g)
-   {
-      if (!this.needsLayout) return
-      for (let i = 0; i < this.nodesToBeRemoved.length; i++){
-		  let index = this.nodes.indexOf(this.nodesToBeRemoved[i])
-		  this.nodes.splice(index, 1)
-	  }
-      for (let i = 0; i < this.edgesToBeRemoved.length; i++){
-		  let index = this.edges.indexOf(this.edgesToBeRemoved[i])
-		  this.edges.splice(index, 1)
-	  }
-      this.nodesToBeRemoved = []
-      this.edgesToBeRemoved = []
-
-      for (let i = 0; i < this.nodes.length; i++)
-      {
-         let n = this.nodes[i]
-         n.layout(this, g)
-      }
-      this.needsLayout = false
-   }
 
    /**
       Gets the smallest rectangle enclosing the graph
@@ -248,15 +199,16 @@ class Graph {
    */
    addNode(n, p)
    {
-      bounds = n.getBounds();
-      n.translate(p.getX() - bounds.getX(), 
-         p.getY() - bounds.getY()); 
-      this.nodes.push(n); 
+	  if (n.isNode()){
+		  bounds = n.getBounds();
+		  n.translate(p.getX() - bounds.getX(), 
+			 p.getY() - bounds.getY())
+		  this.nodes.push(n)
+	  }
    }
 
    /**
-      Adds an edge to this graph. This method should
-      only be called by a decoder when reading a data file.
+      Adds an edge to this graph. 
       @param e the edge to add
       @param start the start node of the edge
       @param end the end node of the edge

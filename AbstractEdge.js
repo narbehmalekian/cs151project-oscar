@@ -1,11 +1,10 @@
 'use strict'
-const edgeModule = require('./EdgeInterface')
 
 /**
    A class that supplies convenience implementations for 
    a number of methods in the Edge interface
 */
-class AbstractEdge extends edgeModule.EdgeInterface {
+class AbstractEdge {
    constructor() {
 	   this.start = undefined
 	   this.end = undefined
@@ -26,12 +25,8 @@ class AbstractEdge extends edgeModule.EdgeInterface {
    }
    connect(s, e)
    {
-	   if (s.isNode() && e.isNode)
-	   {
-		  this.start = s
-		  this.end = e
-	   }
-	   else throw new Error('Parameters must be nodes')
+	   this.start = s
+	   this.end = e
    }
 
    getStart(){ return this.start }
@@ -40,16 +35,9 @@ class AbstractEdge extends edgeModule.EdgeInterface {
    getBounds()
    {
       let conn = getConnectionPoints()
-      let r = { x1: undefined, y1: undefined, x2: undefined, y2: undefined,
-		x3: undefined, y3: undefined, x4: undefined, y4: undefined }
-      r.x1 = conn.x1
-	  r.x2 = conn.x1
-	  r.x3 = conn.x2
-	  r.x4 = conn.x2
-	  r.y1 = conn.y1
-	  r.y2 = conn.y1
-	  r.y3 = conn.y2
-	  r.y4 = conn.y2
+      let r = new Rectangle()
+	  r.setFrameFromDiagonal(conn.getX1(), conn.getY1(),
+         conn.getX2(), conn.getY2());
       return r
    }
 
@@ -57,10 +45,15 @@ class AbstractEdge extends edgeModule.EdgeInterface {
    {
       let startBounds = start.getBounds()
       let endBounds = end.getBounds()
-      let startCenter = { x: startBounds.x + (startBounds.width / 2), y: startBounds.y + (startBounds.height / 2) }
-	  let startCenter = { x: endBounds.x + (endBounds.width / 2), y: endBounds.y + (endBounds.height / 2) }
-      return { x1: start.getConnectionPoint(endCenter).x, y1: start.getConnectionPoint(endCenter).y, x2: end.getConnectionPoint(startCenter).x,
-		y2: end.getConnectionPoint(startCenter).y }
+      let startCenter = new Point()
+	  startCenter.setPoint(startBounds.getX() + (startBounds.getWidth() / 2), startBounds.getY() + (startBounds.getHeight() / 2) 
+	  let endCenter = new Point()
+	  endCenter.setPoint(endBounds.getX() + (endBounds.getWidth() / 2), endBounds.getY() + (endBounds.getHeight() / 2) }
+	  let toEnd = new Direction(startCenter, endCenter);
+	  let returnLine = new Line()
+	  returnLine.setPoints(this.start.getConnectionPoint(toEnd),
+         this.end.getConnectionPoint(toEnd.turn(180)))
+	  return returnLine
    }
    
    draw(){
