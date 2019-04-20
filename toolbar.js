@@ -1,12 +1,11 @@
 'use strict'
 
 class Toolbar{
-    
+    /**
     constructor(graph) {
         this.group = new ButtonGroup()
-        this.tools = new ArrayList()
-
-        this.icon = new Icon()
+        this.tools = []
+        this.icon = null
         {
             const BUTTON_SIZE = 25
             const OFFSET = 5
@@ -69,11 +68,7 @@ class Toolbar{
       setFocusTraversalKeys(KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, newKeys)
     }
     
-    /**
-      Gets the node or edge prototype that is associated with
-      the currently selected button
-      @return a Node or Edge prototype
-   */
+
     getSelectedTool()
     {
         for (const i = 0; i < tools.size(); i++)
@@ -84,13 +79,10 @@ class Toolbar{
         return null;
     }
 
-    /**
-      Adds a node to the tool bar.
-      @param n the node to add
-      @param tip the tool tip
-   */
-    add(n, tip)
-    { let icon = new
+
+    add(n)
+    { 
+	let icon = new
         Icon()
         {
            const BUTTON_SIZE = 25
@@ -135,21 +127,9 @@ class Toolbar{
            });
      popup.add(item);
   }
-   showPopup(panel, point, listener)
+
+   add(e,tip)
    {
-       let popupListner = listener
-       let popup = new JPopupMenu()
-       popup.showPopup(panel,point.getX(), point.getY())
-
-   }
-
-   /**
-      Adds an edge to the tool bar.
-      @param n the node to add
-      @param tip the tool tip
-   */
-  add(e,tip)
-  {
      let icon = new      
         Icon()
         {
@@ -209,7 +189,7 @@ class Toolbar{
         const size = 5
         const panel = document.getElementById('graphpanel')
     }
-
+**/
 }
 
 

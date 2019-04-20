@@ -1,7 +1,4 @@
 'use strict' 
-
-const abstractNode = require('./AbstractNode.js')
-
 /**
 * Draws a single "grabber", a filled square
 * @param g2 the graphics context
@@ -22,52 +19,10 @@ function drawGrabber(x, y)
   square.setAttribute('fill', 'purple')
 }
 
-class CircleNode extends abstractNode.AbstractNode{
-    constructor() { 
-		this.x = 0
-		this.y = 0
-		this.size = 20
-	}
-    getBounds(){
-        let rect = new Rectangle()
-		rect.setRect(this.x, this.y, this.width, this.height)
-		return rect
-      }
-	clone() { return super.clone() }
-    contains(p){
-      return (this.x + this.size / 2 - p.getX()) ** 2 + (this.y + this.size / 2 - p.getY()) ** 2 <= this.size ** 2 / 4
-    }
-    translate(dx, dy) {
-      this.x += dx
-      this.y += dy
-    }
-    draw(){
-      const panel = document.getElementById('graphpanel')
-      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-      circle.setAttribute('cx', this.x + this.size / 2)
-      circle.setAttribute('cy', this.y + this.size / 2)
-      circle.setAttribute('r', this.size / 2)
-      circle.setAttribute('fill', 'black')
-      panel.appendChild(circle)
-    }
-	getConnectionPoint(other){
-	  let centerX = x + this.size / 2
-      let centerY = y + this.size / 2
-      let dx = other.getX() - centerX
-      let dy = other.getY() - centerY
-      let distance = Math.sqrt(dx * dx + dy * dy)
-      if (distance === 0) return other
-      else {
-		  let p = new Point()
-		   p.setPoint(centerX + dx * (this.size / 2) / distance, centerY + dy * (this.size / 2) / distance)
-		   return p
-	  }
-	}
- }
-
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
-  const n1 = createCircleNode(10, 10, 5, 'black')
+  //const toolBar = new ToolBar()
+  const n1 = new CircleNode()
   let p = new Point()
   p.setPoint(10, 10)
   graph.addNode(n1, p)
@@ -79,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let lastMousePoint = null
   
   const panel = document.getElementById('graphpanel')
-  const toolbar = document.getElementByClassName('toolbar')[0]
+  const toolbar = document.getElementsByClassName('toolbar')[0]
   const toolbarButtons = toolbar.getElementsByTagName('button')
   let selected = null
   let dragStartPoint = null
@@ -87,11 +42,10 @@ document.addEventListener('DOMContentLoaded', function () {
   let rubberBandStart = null
 
   function repaint() {
-     panel.innerHTML = ''
-      let bounds = getBounds()
+      panel.innerHTML = ''
       let graphBounds = graph.getBounds()
       graph.draw()
-
+	  //let dragMode = getDragLasso()
       let end = selectedItems.length
 	  let i = 0
       let toBeRemoved = []
@@ -122,12 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       i = 0
-      while (i < toBeRemoved.length())      
+      while (i < toBeRemoved.length)      
 	  {
          removeSelected(toBeRemoved[i])
 		 i++
 	  }
-      
+      /**
       if (dragMode === getDragRubberband())
       {
 		 const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line')
@@ -154,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		 square.setAttribute('height', lasso.getHeight())
 		 square.setAttribute('fill', purple)
 		 panel.appendChild(square)
-      }      
+      }      **/
   }
   
   function mouseLocation(event) {
@@ -178,22 +132,12 @@ document.addEventListener('DOMContentLoaded', function () {
       repaint()
   }
   
-  /**
-      Gets the node or edge prototype that is associated with
-      the currently selected button
-      @return a node or edge protoype
-   */
-   function getSelectedTool()
-   {
-      //checkButtons for which ones are chosen
-      return null
-   }
   
   panel.addEventListener('mousedown', event => {
        let mousePoint = mouseLocation(event)
 	   let n = graph.findNode(mousePoint) 
 	   let e = graph.findEdge(mousePoint);
-	   let tool = toolBar.getSelectedTool()
+	   let tool = null //toolBar.getSelectedTool()
 	   if (tool === null) // select
 	   {
 		  if (e !== null)
@@ -244,16 +188,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const bounds = selected.getBounds();
       
       selected.translate(
-        dragStartBounds.x - bounds.x 
-          + mousePoint.x - dragStartPoint.x,
-        dragStartBounds.y - bounds.y 
-          + mousePoint.y - dragStartPoint.y);
+        dragStartBounds.getX() - bounds.getX()
+          + mousePoint.getX() - dragStartPoint.getX(),
+        dragStartBounds.getY() - bounds.getY() 
+          + mousePoint.getY() - dragStartPoint.getY());
       repaint()
     }
   })
   
   panel.addEventListener('mouseup', event => {
-       let tool = toolBar.getSelectedTool()
+       let tool = null//toolBar.getSelectedTool()
 	   if (rubberBandStart !== null)
 	   {
 		  let mousePoint = mouseLocation(event)

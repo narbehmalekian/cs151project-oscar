@@ -24,35 +24,35 @@ class Rectangle {
 		this.height = height
 	}
 	getWidth(){
-		return width
+		return this.width
 	}
 	getHeight(){
-		return height
+		return this.height
 	}
 	getX(){
 		return this.x
 	}
 	getY(){
 		return this.y
-	}
-	add(r){
-		let x1 = Math.min(getMinX(), r.getMinX());
-		let x2 = Math.max(getMaxX(), r.getMaxX());
-		let y1 = Math.min(getMinY(), r.getMinY());
-		let y2 = Math.max(getMaxY(), r.getMaxY());
-		setRect(x1, y1, x2 - x1, y2 - y1);
-	}
+	}	
 	getMinX(){
-		return getX()
+		return this.getX()
 	}
 	getMinY(){
-		return getY()
+		return this.getY()
 	}
 	getMaxX(){
-		get
+		return this.x + this.width
 	}
 	getMaxY(){
-		
+		return this.y + this.height
+	}
+	add(r){
+		let x1 = Math.min(this.x, r.getMinX())
+		let x2 = Math.max(this.x + this.width, r.getMaxX())
+		let y1 = Math.min(this.y, r.getMinY())
+		let y2 = Math.max(this.y + this.height, r.getMaxY())
+		this.setRect(x1, y1, x2 - x1, y2 - y1);
 	}
 }
 
@@ -242,9 +242,9 @@ class Grid
          
       r.setRect(x, y, w, h);     
    }
+}
 
-	class Direction
-	{
+class Direction{
 	   /**
 		  Constructs a direction between two points
 		  @param p the starting point
@@ -307,9 +307,9 @@ class Grid
 	   static getWest() { return new Direction(-1, 0) }
 	}
 
-}
 
-function isEdge(){
+
+function isEdge(someObject){
 	function can(obj, methodName){
 		return ((typeof obj[methodName]) === "function")
 	}
@@ -341,7 +341,7 @@ function isEdge(){
 	return edge	
 }
 
-function isNode(){
+function isNode(someObject){
 	function can(obj, methodName)
 	{
 		return ((typeof obj[methodName]) === "function")
@@ -366,8 +366,7 @@ function isNode(){
 	}
 	if (can(someObject, "getConnectionPoint")){
 		nodeCounter++
+	}
 	if (nodeCounter === 6) node = true
 	return node	
 }
-
-

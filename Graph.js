@@ -11,8 +11,6 @@ class Graph {
    {
       this.nodes = []
       this.edges = []
-      this.nodesToBeRemoved = []
-      this.edgesToBeRemoved = []
 	  this.minBounds = new Rectangle()
    }
 
@@ -49,7 +47,7 @@ class Graph {
    */
    findNode(p)
    {
-      for (let i = nodes.length - 1; i >= 0; i--)
+      for (let i = this.nodes.length - 1; i >= 0; i--)
       {
          let n = this.nodes[i]
          if (n.contains(p)) return n
@@ -124,7 +122,7 @@ class Graph {
    */
    getBounds()
    {
-      let r = minBounds
+      let r = this.minBounds
       for (let i = 0; i < this.nodes.length; i++)
       {
          let n = this.nodes[i]
@@ -138,9 +136,9 @@ class Graph {
          r.add(e.getBounds())
       }
 	  let temp = new Rectangle()
-	  temp.setTopLeft(r.getX(), r.getY())
-	  temp.setWidth(r.getWidth() + AbstractNode.getShadowGap())
-	  temp.setHeight(r.getHeight() + AbstractNode.getShadowGap())
+	  temp.setLocation(r.getX(), r.getY())
+	  temp.setWidth(r.getWidth() +4)
+	  temp.setHeight(r.getHeight() + 4)
       return (r === null ? new Rectangle() : temp)
    }
    
@@ -167,7 +165,7 @@ class Graph {
    */
    addNode(n, p)
    {
-	  if (n.isNode()){
+	  if (isNode(n)){
 		  let bounds = n.getBounds();
 		  n.translate(p.getX() - bounds.getX(), 
 			 p.getY() - bounds.getY())
@@ -187,4 +185,3 @@ class Graph {
       this.edges.push(e);
    }
 } 
-module.exports = { Graph: Graph }
