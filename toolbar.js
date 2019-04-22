@@ -151,9 +151,6 @@ class ToolBar{
               let scaleX = (BUTTON_SIZE - OFFSET)/ width
               let scaleY = (BUTTON_SIZE - OFFSET)/ height
               let scale = Math.min(scaleX, scaleY)
-              button.translate(x, y);
-              button.scale(scale, scale);
-              button.translate(Math.max((height - width) / 2, 0), Math.max((width - height) / 2, 0));
               e.translate(x, y);
               e.scale(scale, scale);
               e.translate(Math.max((height - width) / 2, 0), Math.max((width - height) / 2, 0));
