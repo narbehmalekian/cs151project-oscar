@@ -36,10 +36,10 @@ class Rectangle {
 		return this.y
 	}	
 	getMinX(){
-		return this.getX()
+		return this.x
 	}
 	getMinY(){
-		return this.getY()
+		return this.y
 	}
 	getMaxX(){
 		return this.x + this.width

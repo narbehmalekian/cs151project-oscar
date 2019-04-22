@@ -11,6 +11,8 @@ class Graph {
    {
       this.nodes = []
       this.edges = []
+	  this.nodePrototypes = []
+	  this.edgePrototypes = []
 	  this.minBounds = new Rectangle()
    }
 
@@ -32,6 +34,7 @@ class Graph {
          if (n1.addEdge(e, p1, p2) && e.getEnd() !== null)
          {
             this.edges.push(e)
+			
             if (!this.nodes.contains(e.getEnd()))
                this.nodes.push(e.getEnd())
             return true
@@ -183,5 +186,26 @@ class Graph {
    {
       e.connect(start, end);
       this.edges.push(e);
+   }
+   setNodePrototype(n){
+	   let duplicate = false
+	   for (let i = 0; i < this.nodePrototypes.length; i++){
+		   if (this.nodePrototypes[i].constructor.name === n.constructor.name) duplicate = true
+	   }
+	   if (duplicate === false)  this.nodePrototypes.push(n)
+   }
+   setEdgePrototype(e){
+	   let duplicate = false
+	   for (let i = 0; i < this.edgePrototypes.length; i++){
+		   if (this.edgePrototypes[i].constructor.name === n.constructor.name) duplicate = true
+	   }
+	   if (duplciate === false)  this.edgePrototypes.push(n)
+   }
+   getNodePrototypes(){
+	   return this.nodePrototypes
+   }
+   
+   getEdgePrototypes(){
+	   return this.edgePrototypes
    }
 } 

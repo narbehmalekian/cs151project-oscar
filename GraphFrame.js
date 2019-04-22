@@ -17,98 +17,51 @@ function drawGrabber(x, y)
   square.setAttribute('width', temp.getWidth())
   square.setAttribute('height', temp.getHeight())
   square.setAttribute('fill', 'purple')
+  panel.appendChild(square)
 }
 
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
-  //const toolBar = new ToolBar()
-  const n1 = new CircleNode()
-  let p = new Point()
-  p.setPoint(10, 10)
-  graph.addNode(n1, p)
+  graph.setNodePrototype(new CircleNode())
+  const toolBar = new ToolBar(graph)
+  toolBar.add()
   graph.draw()
-  let selectedItems = []
   let lastSelected = null
   let selectedButton = null
   let mouseDownPoint = null
   let lastMousePoint = null
   
   const panel = document.getElementById('graphpanel')
-  const toolbar = document.getElementsByClassName('toolbar')[0]
-  const toolbarButtons = toolbar.getElementsByTagName('button')
   let selected = null
   let dragStartPoint = null
   let dragStartBounds = null
   let rubberBandStart = null
 
   function repaint() {
-      panel.innerHTML = ''
-      let graphBounds = graph.getBounds()
-      graph.draw()
-	  //let dragMode = getDragLasso()
-      let end = selectedItems.length
-	  let i = 0
-      let toBeRemoved = []
-      while (i < end)
-      {
-         selected = selectedItems[i]               
-      
-         if (!graph.getNodes().contains(selected)
-               && !graph.getEdges().contains(selected)) 
-         {
-            toBeRemoved.push(selected)
-         }
-         else if (selected.isNode())
-         {
-            grabberBounds = selected.getBounds();
-            drawGrabber(grabberBounds.getMinX(), grabberBounds.getMinY())
-            drawGrabber(grabberBounds.getMinX(), grabberBounds.getMaxY())
-            drawGrabber(grabberBounds.getMaxX(), grabberBounds.getMinY())
-            drawGrabber(grabberBounds.getMaxX(), grabberBounds.getMaxY())
-         }
-         else if (selected.isEdge())
-         {
-            lineObject = selected.getConnectionPoints();
-            drawGrabber(line.getX1(), line.getY1())
-            drawGrabber(line.getX2(), line.getY2())
-         }
-		 i++
-      }
-
-      i = 0
-      while (i < toBeRemoved.length)      
-	  {
-         removeSelected(toBeRemoved[i])
-		 i++
-	  }
-      /**
-      if (dragMode === getDragRubberband())
-      {
-		 const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-		 line1.setAttribute('x1', mouseDownPoint.getX())
-		 line1.setAttribute('y1', mouseDownPoint.getY())
-		 line1.setAttribute('x2', lastMousePoint.getX())
-		 line1.setAttribute('y2', lastMousePoint.getY())
-		 line1.setAttribute('fill', purple)
-         panel.appendChild(line1)
-      }      
-      else if (dragMode === getDragLasso())
-      {
-         let x1 = mouseDownPoint.getX()
-         let y1 = mouseDownPoint.getY()
-         let x2 = lastMousePoint.getX()
-         let y2 = lastMousePoint.getY()
-         lasso = new Rectangle()
-		 lasso.setRect(Math.min(x1, x2), 
-               Math.min(y1, y2), Math.abs(x1 - x2) , Math.abs(y1 - y2))
-	     const square = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
-		 square.setAttribute('x', lasso.getX())
-		 square.setAttribute('y', lasso.getY())
-		 square.setAttribute('width', lasso.getWidth())
-		 square.setAttribute('height', lasso.getHeight())
-		 square.setAttribute('fill', purple)
-		 panel.appendChild(square)
-      }      **/
+	 panel.innerHTML = ''
+	 let graphBounds = graph.getBounds()
+	 graph.draw()
+	 if (selected !== null){
+		 if (!graph.getNodes().includes(selected)
+			   && !graph.getEdges().includes(selected)) 
+		 {
+			removeSelected(selected)
+		 }
+		 else if (isNode(selected))
+		 {
+			const grabberBounds = selected.getBounds()
+			drawGrabber(grabberBounds.getMinX(), grabberBounds.getMinY())
+			drawGrabber(grabberBounds.getMinX(), grabberBounds.getMaxY())
+			drawGrabber(grabberBounds.getMaxX(), grabberBounds.getMinY())
+			drawGrabber(grabberBounds.getMaxX(), grabberBounds.getMaxY())
+		 }
+		 else if (isEdge(selected))
+		 {
+			lineObject = selected.getConnectionPoints();
+			drawGrabber(line.getX1(), line.getY1())
+			drawGrabber(line.getX2(), line.getY2())
+		 }
+	 }
   }
   
   function mouseLocation(event) {
@@ -120,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
   function removeSelected(sel){
-	  if (sel.isNode())
+	  if (isNode(sel))
       {
          graph.removeNode(sel)
       }
-      else if (sel.isEdge())
+      else if (isEdge(sel))
       {
          graph.removeEdge(sel)
       }          
@@ -137,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function () {
        let mousePoint = mouseLocation(event)
 	   let n = graph.findNode(mousePoint) 
 	   let e = graph.findEdge(mousePoint);
-	   let tool = null //toolBar.getSelectedTool()
+	   let tool = toolBar.getSelectedTool()
 	   if (tool === null) // select
 	   {
 		  if (e !== null)
@@ -155,11 +108,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			 selected = null
 		  }
 	   }
-	   else if (tool.isNode())
+	   else if (isNode(tool))
 	   {
-		  let proto = tool
-		  let newNode = proto.clone()
-		  let added = graph.add(newNode, mousePoint)
+		  let proto = tool.clone()
+		  let added = graph.addNode(proto, mousePoint)
 		  if (added)
 		  {
 			 selected = newNode
@@ -173,12 +125,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			 dragStartBounds = n.getBounds()
 		  }
 	   }
-	   else if (tool.isEdge())
+	   else if (isEdge(tool))
 	   {
 		  if (n !== null) rubberBandStart = mousePoint
 	   }
-	   lastMousePoint = mousePoint;
-	   repaint();
+	   lastMousePoint = mousePoint
+	   repaint()
   })
 
   panel.addEventListener('mousemove', event => {
@@ -186,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let mousePoint = mouseLocation(event)
     if (selected !== null) {
       const bounds = selected.getBounds();
-      
       selected.translate(
         dragStartBounds.getX() - bounds.getX()
           + mousePoint.getX() - dragStartPoint.getX(),
@@ -197,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function () {
   })
   
   panel.addEventListener('mouseup', event => {
-       let tool = null//toolBar.getSelectedTool()
+       let tool = toolBar.getSelectedTool()
 	   if (rubberBandStart !== null)
 	   {
 		  let mousePoint = mouseLocation(event)
@@ -213,9 +164,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	   lastMousePoint = null;
 	   dragStartBounds = null;
 	   rubberBandStart = null;
+	   lastSelected = selected;
+	   selected = null;
   })
   
-  toolbar.addEventListener('nodebuttonpress', event => {
-	selectedButton = 'node'
-  })
 })

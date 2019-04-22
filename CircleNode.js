@@ -12,7 +12,7 @@ class CircleNode {
 		return rect
       }
 	clone() { 
-	 let clone = this
+	 let clone = new CircleNode()
 	 return clone
 	}
     contains(p){
