@@ -2,7 +2,7 @@
 
 class ToolBar{
 
-       constructor() {
+        constructor() {
         group = new ButtonGroup() //need to make this still
         tools = []
         icon = null
@@ -37,7 +37,7 @@ class ToolBar{
         //           popupListener.actionPerformed(event);
         //     }
         // })
-      //  popup.add(item)
+        //popup.add(item)
         //const graphResources = ResourceBundle.getBundle(graph.getClass().getName() + "String")
 
         let nodeTypes = graph.getNodePrototypes()
