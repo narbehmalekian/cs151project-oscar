@@ -1,4 +1,5 @@
 'use strict' 
+
 /**
 * Draws a single "grabber", a filled square
 * @param g2 the graphics context
@@ -20,6 +21,19 @@ function drawGrabber(x, y)
   panel.appendChild(square)
 }
 
+function download(filename, graphSave) {
+    let element = document.createElement('a')
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(graphSave))
+    element.setAttribute('download', filename)
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+
+    element.click()
+
+    document.body.removeChild(element)
+ }
+
 document.addEventListener('DOMContentLoaded', function () {
   const graph = new Graph()
   graph.setNodePrototype(new CircleNode())
@@ -27,12 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
   toolBar.add()
   graph.draw()
   let lastSelected = null
-  let selectedButton = null
   let mouseDownPoint = null
   let lastMousePoint = null
   
   const panel = document.getElementById('graphpanel')
   const deleteButton = document.getElementById('delete')
+  const saveButton = document.getElementById('save')
   let selected = null
   let dragStartPoint = null
   let dragStartBounds = null
@@ -171,10 +185,28 @@ document.addEventListener('DOMContentLoaded', function () {
   })
   
   deleteButton.addEventListener('mousedown', event => {
-	  console.log("test")
 	  if (isNode(lastSelected)) graph.removeNode(lastSelected)
       else if (isEdge(lastSelected)) graph.removeEdge(lastSelected)
 	  repaint()
   })
   
+  saveButton.addEventListener('mousedown', even => {
+	  let textBox = document.getElementById('text-val')
+	  let saveButton = document.getElementById('dwn-btn')
+	  textBox.setAttribute('style', 'display:inline')
+	  saveButton.setAttribute('style', 'display:inline')
+  })
+  
+  document.getElementById("dwn-btn").addEventListener("click", function(){
+    let textEntry = document.getElementById("text-val").value
+    
+    download(textEntry, graph);
+	}, false)
+	
+	document.addEventListener('mousedown', event => {
+		let x = document.getElementById('editdropdown')
+		if (x.className.indexOf('w3-show') !== -1){
+			x.className = x.className.replace('w3-show', '')
+		}
+	})
 })
