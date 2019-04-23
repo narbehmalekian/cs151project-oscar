@@ -370,3 +370,22 @@ function isNode(someObject){
 	if (nodeCounter === 6) node = true
 	return node	
 }
+
+function dropdownClick(event){
+  if (event.target.id === "filecontent"){
+	  var x = document.getElementById("filedropdown")
+	  var y = document.getElementById("editdropdown")
+  }
+  else{
+	  var x = document.getElementById("editdropdown")
+	  var y = document.getElementById("filedropdown")
+  }
+  if (x.className.indexOf("w3-show") === -1) {  
+    x.className += " w3-show";
+  } else { 
+    x.className = x.className.replace(" w3-show", "")
+  }
+  if (y.className.indexOf("w3-show") !== -1){
+	y.className = y.className.replace("w3-show", "")
+  }
+}

@@ -115,7 +115,7 @@ class Graph {
    */
    removeEdge(e)
    {
-      this.edges.splice(this.edges.indeOf(e), 1)
+      this.edges.splice(this.edges.indexOf(e), 1)
    }
 
 

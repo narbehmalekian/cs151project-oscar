@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
   let lastMousePoint = null
   
   const panel = document.getElementById('graphpanel')
+  const deleteButton = document.getElementById('delete')
   let selected = null
   let dragStartPoint = null
   let dragStartBounds = null
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  if (n !== null) rubberBandStart = mousePoint
 	   }
 	   lastMousePoint = mousePoint
+	   lastSelected = selected
 	   repaint()
   })
 
@@ -166,6 +168,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	   rubberBandStart = null;
 	   lastSelected = selected;
 	   selected = null;
+  })
+  
+  deleteButton.addEventListener('mousedown', event => {
+	  console.log("test")
+	  if (isNode(lastSelected)) graph.removeNode(lastSelected)
+      else if (isEdge(lastSelected)) graph.removeEdge(lastSelected)
+	  repaint()
   })
   
 })

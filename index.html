@@ -11,6 +11,26 @@
 	<script src='Graph.js' type='text/javascript'></script> 
   </head>   
   <body>
+	<div class="navbar">
+		<div  class="dropdown">
+			<button id="filecontent" class="dropbtn" onclick="dropdownClick(event)">File
+				<i class="fa fa-caret-down"></i>
+			</button>
+			<div id="filedropdown" class="dropdown-content">
+				<a href="#">Open</a>
+				<a href="#">Save</a>
+			</div>
+		</div>
+		<div  class="dropdown">
+			<button id="editcontent" class="dropbtn" onclick="dropdownClick(event)">Edit
+				<i class="fa fa-caret-down"></i>
+			</button>
+			<div id="editdropdown" class="dropdown-content">
+				<a id="delete" href="#">Delete</a>
+				<a href="#">Properties</a>
+			</div>
+		</div> 
+	</div>
 	<div id='toolbar'>
 		
 	</div>
