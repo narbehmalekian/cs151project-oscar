@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const deleteButton = document.getElementById('delete')
   const saveButton = document.getElementById('save')
   let selected = null
+  let menuFunct = false;
   let dragStartPoint = null
   let dragStartBounds = null
   let rubberBandStart = null
@@ -190,12 +191,17 @@ document.addEventListener('DOMContentLoaded', function () {
 	  repaint()
   })
   
-  saveButton.addEventListener('mousedown', even => {
+  saveButton.addEventListener('mousedown', event => {
 	  let textBox = document.getElementById('text-val')
 	  let saveButton = document.getElementById('dwn-btn')
 	  textBox.setAttribute('style', 'display:inline')
 	  saveButton.setAttribute('style', 'display:inline')
+	  menuFunct = true
   })
+  
+  document.getElementById('open').addEventListener('mousedown', event => {
+		menuFunct = true
+	})
   
   document.getElementById("dwn-btn").addEventListener("click", function(){
     let textEntry = document.getElementById("text-val").value
@@ -205,8 +211,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	document.addEventListener('mousedown', event => {
 		let x = document.getElementById('editdropdown')
+		let y = document.getElementById('filedropdown')
 		if (x.className.indexOf('w3-show') !== -1){
 			x.className = x.className.replace('w3-show', '')
 		}
+		if (y.className.indexOf('w3-show') !== -1 && menuFunct !== true){
+			y.className = y.className.replace('w3-show', '')
+		}
+		menuFunct = false
 	})
 })
