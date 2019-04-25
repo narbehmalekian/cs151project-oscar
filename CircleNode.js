@@ -44,4 +44,14 @@ class CircleNode {
 		   return p
 	  }
 	}
+	
+	drawIcon(x)
+	{
+		const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+		circle.setAttribute('cx', this.x + this.size / 2)
+		circle.setAttribute('cy', this.y + this.size / 2)
+		circle.setAttribute('r', this.size / 2)
+		circle.setAttribute('fill', 'goldenrod')
+		x.appendChild(circle)
+	}
  }

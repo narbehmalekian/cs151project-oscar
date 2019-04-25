@@ -60,8 +60,7 @@ class ToolBar{
 				}
 				if (!found) this.currentTool = null
 			})
-			const textNew = document.createTextNode(this.prototypes[i].constructor.name)
-			newButton.appendChild(textNew)
+			this.prototypes[i].drawIcon(newButton)
 			div.appendChild(newButton)
 		}
    }
