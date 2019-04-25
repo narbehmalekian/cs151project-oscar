@@ -337,7 +337,16 @@ function isEdge(someObject){
 	if (can(someObject, "draw")){
 		edgeCounter++
 	}
-	if (edgeCounter === 7) edge = true
+	if (can(someObject, "drawIcon")){
+		edgeCounter++
+	}
+	if (can(someObject, "getIconHeight")){
+		edgeCounter++
+	}
+	if (can(someObject, "getIconWidth")){
+		edgeCounter++
+	}
+	if (edgeCounter === 10) edge = true
 	return edge	
 }
 
@@ -367,7 +376,16 @@ function isNode(someObject){
 	if (can(someObject, "getConnectionPoint")){
 		nodeCounter++
 	}
-	if (nodeCounter === 6) node = true
+	if (can(someObject, "drawIcon")){
+		nodeCounter++
+	}
+	if (can(someObject, "getIconHeight")){
+		nodeCounter++
+	}
+	if (can(someObject, "getIconWidth")){
+		nodeCounter++
+	}
+	if (nodeCounter === 9) node = true
 	return node	
 }
 
