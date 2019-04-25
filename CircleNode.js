@@ -4,6 +4,8 @@ class CircleNode {
     constructor() { 
 		this.x = 0
 		this.y = 0
+		this.iconHeight = 0
+		this.iconWidth = 0
 		this.size = 20
 	}
     getBounds(){
@@ -45,13 +47,21 @@ class CircleNode {
 	  }
 	}
 	
-	drawIcon(x)
+	drawIcon()
 	{
+		this.iconHeight = this.size
+		this.iconWidth = this.size
 		const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
 		circle.setAttribute('cx', this.x + this.size / 2)
 		circle.setAttribute('cy', this.y + this.size / 2)
 		circle.setAttribute('r', this.size / 2)
 		circle.setAttribute('fill', 'goldenrod')
-		x.appendChild(circle)
+		return circle
 	}
+	
+	getIconHeight(){
+		 return this.iconHeight
+	}
+	
+	getIconWidth(){ return this.iconWidth }
  }

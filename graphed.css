@@ -2,10 +2,6 @@
     border: solid black thin;
 }
 
-#toolbarButtons {
-	border: solid black thin;
-}
-
 /* Navbar container */
 .navbar {
   overflow: hidden;
