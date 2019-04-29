@@ -1,5 +1,7 @@
 'use strict'
 
+class FieldNode{
+
 constructor(){
 	let name = MultiLineString();
 	name.setJustification(MultiLineString.RIGHT);
@@ -36,6 +38,7 @@ draw(g2){
 	if(boxedValue){
 		g2.draw(valueBounds);
 	}
+}
 
 addEdge(e, p1, p2){
 	if(e instanceof ObjectReferenceEdge && e.getEnd() instanceof ObjectNode){
@@ -117,6 +120,8 @@ getShape(){
 	else{
 		return undefined;
 	}
+}
+
 }
 
 
