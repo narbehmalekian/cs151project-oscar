@@ -64,4 +64,38 @@ class CircleNode {
 	}
 	
 	getIconWidth(){ return this.iconWidth }
+	
+
+   /**
+      Adds a node as a child node to this node.
+      @param n the child node
+      @param p the point at which the node is being added
+      @return true if this node accepts the given node as a child
+   */
+    addNode(n, p) { return false; } 
+
+
+   /**
+      Notifies this node that a node is being removed.
+      @param g the ambient graph
+      @param n the node to be removed
+   */
+   removeNode(g, n) { }
+   
+   removeEdge(g, e) { }
+   
+   /**
+      Adds an edge that originates at this node.
+      @param p the point that the user selected as
+      the starting point. This may be used as a hint if 
+      edges are ordered.
+      @param e the edge to add
+      @return true if the edge was added
+   */
+   addEdge(e, p1, p2){
+		if (e.getEnd() !== null){
+			return true
+		}
+		else return false;
+   }
  }

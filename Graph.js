@@ -28,16 +28,14 @@ class Graph {
    {
       let n1 = findNode(p1)
       let n2 = findNode(p2)
-      if (n1 !== null)
+      if (n1 !== null && n2 !== null)
       {
          e.connect(n1, n2);
          if (n1.addEdge(e, p1, p2) && e.getEnd() !== null)
          {
+			n2.addEdge(e, p1, p2)
             this.edges.push(e)
-			
-            if (!this.nodes.contains(e.getEnd()))
-               this.nodes.push(e.getEnd())
-            return true
+			return true
          }
       }
       return false
@@ -98,7 +96,11 @@ class Graph {
    */
    removeNode(n)
    {
-	  
+	  for (let i = 0; i < this.nodes.length; i++)
+      {
+         let n2 = this.nodes[i]
+         n2.removeNode(this, n)
+      }
       for (let i = 0; i < this.edges.length; i++)
       {
          let e = this.edges[i]
@@ -115,6 +117,11 @@ class Graph {
    */
    removeEdge(e)
    {
+	  for (let i = this.nodes.length - 1; i >= 0; i--)
+      {
+         let n = this.nodes[i]
+         n.removeEdge(this, e)
+      }
       this.edges.splice(this.edges.indexOf(e), 1)
    }
 
@@ -172,21 +179,23 @@ class Graph {
 		  let bounds = n.getBounds();
 		  n.translate(p.getX() - bounds.getX(), 
 			 p.getY() - bounds.getY())
+			 
+		  let accepted = false
+		  let insideANode = false
+		  for (let i = this.nodes.length - 1; i >= 0 && !accepted; i--)
+		  {
+			 let parentNode = this.nodes[i]
+			 if (parentNode.contains(p)) 
+			 {
+				insideANode = true
+				if (parentNode.addNode(n, p)) accepted = true
+			 }
+		  }
+		  if (insideANode && !accepted) return false
 		  this.nodes.push(n)
 	  }
    }
 
-   /**
-      Adds an edge to this graph. 
-      @param e the edge to add
-      @param start the start node of the edge
-      @param end the end node of the edge
-   */
-   connect(e, start, end)
-   {
-      e.connect(start, end);
-      this.edges.push(e);
-   }
    setNodePrototype(n){
 	   let duplicate = false
 	   for (let i = 0; i < this.nodePrototypes.length; i++){

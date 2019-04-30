@@ -63,28 +63,26 @@ document.addEventListener('DOMContentLoaded', function () {
 	let dragStartBounds = null
 	let rubberBandStart = null
 	
-function addGraphType(graphType, title, toolbar) {
-	let dropdown = document.getElementById('graphdropdown')
-	let name = graphType.constructor.name
-	let a = document.createElement('a')
-	a.setAttribute('id', name)
-	a.setAttribute('href', '#')
-	let t = document.createTextNode(title)
-	dropdown.appendChild(a)
-	a.appendChild(t)
-	a.addEventListener('mousedown', event => {
-		graph = graphType
-		repaint()
-		toolBar = toolbar
-		toolBar.add()
-	})
- }
+	function addGraphType(graphType, title, toolbar) {
+		let dropdown = document.getElementById('graphdropdown')
+		let a = document.createElement('a')
+		a.setAttribute('href', '#')
+		let t = document.createTextNode(title)
+		dropdown.appendChild(a)
+		a.appendChild(t)
+		a.addEventListener('mousedown', event => {
+			graph = graphType
+			repaint()
+			toolBar = toolbar
+			toolBar.add()
+		})
+	}
 
   function repaint() {
-	 panel.innerHTML = ''
-	 let graphBounds = graph.getBounds()
-	 graph.draw()
-	 if (selected !== null){
+		panel.innerHTML = ''
+		let graphBounds = graph.getBounds()
+		graph.draw()
+		if (selected !== null){
 		 if (!graph.getNodes().includes(selected)
 			   && !graph.getEdges().includes(selected)) 
 		 {
@@ -104,7 +102,7 @@ function addGraphType(graphType, title, toolbar) {
 			drawGrabber(line.getX1(), line.getY1())
 			drawGrabber(line.getX2(), line.getY2())
 		 }
-	 }
+		}
 	}
 
 	function mouseLocation(event) {
@@ -231,10 +229,10 @@ function addGraphType(graphType, title, toolbar) {
 	})
 
 	document.getElementById("dwn-btn").addEventListener("click", function(){
-	let textEntry = document.getElementById("text-val").value
+		let textEntry = document.getElementById("text-val").value
 
-	download(textEntry, graph)
-	}, false)
+		download(textEntry, graph)
+		}, false)
 
 	document.addEventListener('mousedown', event => {
 		let x = document.getElementById('editdropdown')

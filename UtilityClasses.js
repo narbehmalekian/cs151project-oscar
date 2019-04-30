@@ -385,7 +385,19 @@ function isNode(someObject){
 	if (can(someObject, "getIconWidth")){
 		nodeCounter++
 	}
-	if (nodeCounter === 9) node = true
+	if (can(someObject, "addNode")){
+		nodeCounter++
+	}
+	if (can(someObject, "addEdge")){
+		nodeCounter++
+	}
+	if (can(someObject, "removeNode")){
+		nodeCounter++
+	}
+	if (can(someObject, "removeEdge")){
+		nodeCounter++
+	}
+	if (nodeCounter === 13) node = true
 	return node	
 }
 
