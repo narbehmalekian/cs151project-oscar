@@ -33,6 +33,8 @@ function download(filename, graphSave) {
 
     document.body.removeChild(element)
  }
+ 
+
 
 document.addEventListener('DOMContentLoaded', function () {
 	const simpleGraph = new Graph()
@@ -42,9 +44,12 @@ document.addEventListener('DOMContentLoaded', function () {
 	//objectGraph.setNodePrototype(new ObjectNode())
 	// objectGraph.setEdgePrototype(new ObjectReferenceEdge())
 	const simpleToolBar = new ToolBar(simpleGraph)
+	const objectToolBar = new ToolBar(objectGraph)
 	let toolBar = simpleToolBar
 	toolBar.add()
 	graph.draw()
+	addGraphType(simpleGraph, 'Simple Graph', simpleToolBar)
+	addGraphType(objectGraph, 'Object Diagram', objectToolBar)
 	let lastSelected = null
 	let mouseDownPoint = null
 	let lastMousePoint = null
@@ -53,29 +58,27 @@ document.addEventListener('DOMContentLoaded', function () {
 	const deleteButton = document.getElementById('delete')
 	const saveButton = document.getElementById('save')
 	let selected = null
-	let menuFunct = false;
+	let menuFunct = false
 	let dragStartPoint = null
 	let dragStartBounds = null
 	let rubberBandStart = null
-
-	function repaint() {
-  const graph = new Graph()
-  graph.setNodePrototype(new CircleNode())
-  const toolBar = new ToolBar(graph)
-  toolBar.add()
-  graph.draw()
-  let lastSelected = null
-  let mouseDownPoint = null
-  let lastMousePoint = null
-  
-  const panel = document.getElementById('graphpanel')
-  const deleteButton = document.getElementById('delete')
-  const saveButton = document.getElementById('save')
-  let selected = null
-  let menuFunct = false
-  let dragStartPoint = null
-  let dragStartBounds = null
-  let rubberBandStart = null
+	
+function addGraphType(graphType, title, toolbar) {
+	let dropdown = document.getElementById('graphdropdown')
+	let name = graphType.constructor.name
+	let a = document.createElement('a')
+	a.setAttribute('id', name)
+	a.setAttribute('href', '#')
+	let t = document.createTextNode(title)
+	dropdown.appendChild(a)
+	a.appendChild(t)
+	a.addEventListener('mousedown', event => {
+		graph = graphType
+		repaint()
+		toolBar = toolbar
+		toolBar.add()
+	})
+ }
 
   function repaint() {
 	 panel.innerHTML = ''
@@ -247,19 +250,5 @@ document.addEventListener('DOMContentLoaded', function () {
 			z.className = z.className.replace('w3-show', '')
 		}
 		menuFunct = false
-	})
-
-	document.getElementById('object').addEventListener('mousedown', event => {
-		graph = objectGraph
-		repaint()
-		toolbar = new ToolBar(graph)
-		toolbar.add()
-	})
-
-	document.getElementById('simple').addEventListener('mousedown', event => {
-		graph = simpleGraph
-		repaint()
-		toolBar = simpleToolBar
-		toolBar.add()
 	})
 })
