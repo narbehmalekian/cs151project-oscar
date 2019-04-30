@@ -22,6 +22,7 @@ class ToolBar{
    add()
    {
 	    const div = document.getElementById('toolbar')
+		div.innerHTML = ''
 		const grabButton = document.createElement('button')
 		grabButton.setAttribute('name', 'Grabber')
 		grabButton.setAttribute('class', 'toolbarButtons')

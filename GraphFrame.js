@@ -35,25 +35,30 @@ function download(filename, graphSave) {
  }
 
 document.addEventListener('DOMContentLoaded', function () {
-  const graph = new Graph()
-  graph.setNodePrototype(new CircleNode())
-  const toolBar = new ToolBar(graph)
-  toolBar.add()
-  graph.draw()
-  let lastSelected = null
-  let mouseDownPoint = null
-  let lastMousePoint = null
-  
-  const panel = document.getElementById('graphpanel')
-  const deleteButton = document.getElementById('delete')
-  const saveButton = document.getElementById('save')
-  let selected = null
-  let menuFunct = false;
-  let dragStartPoint = null
-  let dragStartBounds = null
-  let rubberBandStart = null
+	const simpleGraph = new Graph()
+	const objectGraph = new Graph()
+	simpleGraph.setNodePrototype(new CircleNode())
+	let graph = simpleGraph
+	//objectGraph.setNodePrototype(new ObjectNode())
+	// objectGraph.setEdgePrototype(new ObjectReferenceEdge())
+	const simpleToolBar = new ToolBar(simpleGraph)
+	let toolBar = simpleToolBar
+	toolBar.add()
+	graph.draw()
+	let lastSelected = null
+	let mouseDownPoint = null
+	let lastMousePoint = null
 
-  function repaint() {
+	const panel = document.getElementById('graphpanel')
+	const deleteButton = document.getElementById('delete')
+	const saveButton = document.getElementById('save')
+	let selected = null
+	let menuFunct = false;
+	let dragStartPoint = null
+	let dragStartBounds = null
+	let rubberBandStart = null
+
+	function repaint() {
 	 panel.innerHTML = ''
 	 let graphBounds = graph.getBounds()
 	 graph.draw()
@@ -78,32 +83,32 @@ document.addEventListener('DOMContentLoaded', function () {
 			drawGrabber(line.getX2(), line.getY2())
 		 }
 	 }
-  }
-  
-  function mouseLocation(event) {
-    var rect = panel.getBoundingClientRect()
+	}
+
+	function mouseLocation(event) {
+	  var rect = panel.getBoundingClientRect()
 	  let p = new Point()
 	  p.setPoint(event.clientX - rect.left, event.clientY - rect.top)
 	  return p
-    
-  }
-  
-  function removeSelected(sel){
+
+	}
+
+	function removeSelected(sel){
 	  if (isNode(sel))
-      {
-         graph.removeNode(sel)
-      }
-      else if (isEdge(sel))
-      {
-         graph.removeEdge(sel)
-      }          
-      selected = null
-      repaint()
-  }
-  
-  
-  panel.addEventListener('mousedown', event => {
-       let mousePoint = mouseLocation(event)
+	  {
+		 graph.removeNode(sel)
+	  }
+	  else if (isEdge(sel))
+	  {
+		 graph.removeEdge(sel)
+	  }          
+	  selected = null
+	  repaint()
+	}
+
+
+	panel.addEventListener('mousedown', event => {
+	   let mousePoint = mouseLocation(event)
 	   let n = graph.findNode(mousePoint) 
 	   let e = graph.findEdge(mousePoint);
 	   let tool = toolBar.getSelectedTool()
@@ -148,24 +153,24 @@ document.addEventListener('DOMContentLoaded', function () {
 	   lastMousePoint = mousePoint
 	   lastSelected = selected
 	   repaint()
-  })
+	})
 
-  panel.addEventListener('mousemove', event => {
-    if (dragStartPoint === null) return
-    let mousePoint = mouseLocation(event)
-    if (selected !== null) {
-      const bounds = selected.getBounds();
-      selected.translate(
-        dragStartBounds.getX() - bounds.getX()
-          + mousePoint.getX() - dragStartPoint.getX(),
-        dragStartBounds.getY() - bounds.getY() 
-          + mousePoint.getY() - dragStartPoint.getY());
-      repaint()
-    }
-  })
-  
-  panel.addEventListener('mouseup', event => {
-       let tool = toolBar.getSelectedTool()
+	panel.addEventListener('mousemove', event => {
+	if (dragStartPoint === null) return
+	let mousePoint = mouseLocation(event)
+	if (selected !== null) {
+	  const bounds = selected.getBounds();
+	  selected.translate(
+		dragStartBounds.getX() - bounds.getX()
+		  + mousePoint.getX() - dragStartPoint.getX(),
+		dragStartBounds.getY() - bounds.getY() 
+		  + mousePoint.getY() - dragStartPoint.getY());
+	  repaint()
+	}
+	})
+
+	panel.addEventListener('mouseup', event => {
+	   let tool = toolBar.getSelectedTool()
 	   if (rubberBandStart !== null)
 	   {
 		  let mousePoint = mouseLocation(event)
@@ -183,41 +188,59 @@ document.addEventListener('DOMContentLoaded', function () {
 	   rubberBandStart = null;
 	   lastSelected = selected;
 	   selected = null;
-  })
-  
-  deleteButton.addEventListener('mousedown', event => {
+	})
+
+	deleteButton.addEventListener('mousedown', event => {
 	  if (isNode(lastSelected)) graph.removeNode(lastSelected)
-      else if (isEdge(lastSelected)) graph.removeEdge(lastSelected)
+	  else if (isEdge(lastSelected)) graph.removeEdge(lastSelected)
 	  repaint()
-  })
-  
-  saveButton.addEventListener('mousedown', event => {
+	})
+
+	saveButton.addEventListener('mousedown', event => {
 	  let textBox = document.getElementById('text-val')
 	  let saveButton = document.getElementById('dwn-btn')
 	  textBox.setAttribute('style', 'display:inline')
 	  saveButton.setAttribute('style', 'display:inline')
 	  menuFunct = true
-  })
-  
-  document.getElementById('open').addEventListener('mousedown', event => {
+	})
+
+	document.getElementById('open').addEventListener('mousedown', event => {
 		menuFunct = true
 	})
-  
-  document.getElementById("dwn-btn").addEventListener("click", function(){
-    let textEntry = document.getElementById("text-val").value
-    
-    download(textEntry, graph);
+
+	document.getElementById("dwn-btn").addEventListener("click", function(){
+	let textEntry = document.getElementById("text-val").value
+
+	download(textEntry, graph)
 	}, false)
-	
+
 	document.addEventListener('mousedown', event => {
 		let x = document.getElementById('editdropdown')
 		let y = document.getElementById('filedropdown')
+		let z = document.getElementById('graphdropdown')
 		if (x.className.indexOf('w3-show') !== -1){
 			x.className = x.className.replace('w3-show', '')
 		}
 		if (y.className.indexOf('w3-show') !== -1 && menuFunct !== true){
 			y.className = y.className.replace('w3-show', '')
 		}
+		if (z.className.indexOf('w3-show') !== -1){
+			z.className = z.className.replace('w3-show', '')
+		}
 		menuFunct = false
+	})
+
+	document.getElementById('object').addEventListener('mousedown', event => {
+		graph = objectGraph
+		repaint()
+		toolbar = new ToolBar(graph)
+		toolbar.add()
+	})
+
+	document.getElementById('simple').addEventListener('mousedown', event => {
+		graph = simpleGraph
+		repaint()
+		toolBar = simpleToolBar
+		toolBar.add()
 	})
 })

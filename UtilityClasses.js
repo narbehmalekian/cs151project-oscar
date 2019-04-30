@@ -393,10 +393,17 @@ function dropdownClick(event){
   if (event.target.id === "filecontent"){
 	  var x = document.getElementById("filedropdown")
 	  var y = document.getElementById("editdropdown")
+	  var z = document.getElementById("graphdropdown")
   }
-  else{
+  else if (event.target.id === "editcontent"){
 	  var x = document.getElementById("editdropdown")
 	  var y = document.getElementById("filedropdown")
+	  var z = document.getElementById("graphdropdown")
+  }
+  else if (event.target.id === "graphcontent"){
+	  var x = document.getElementById("graphdropdown")
+	  var y = document.getElementById("filedropdown")
+	  var z = document.getElementById("editdropdown")
   }
   if (x.className.indexOf("w3-show") === -1) {  
     x.className += " w3-show";
@@ -405,5 +412,8 @@ function dropdownClick(event){
   }
   if (y.className.indexOf("w3-show") !== -1){
 	y.className = y.className.replace("w3-show", "")
+  }
+  if (z.className.indexOf("w3-show") !== -1){
+	z.className = z.className.replace("w3-show", "")
   }
 }
