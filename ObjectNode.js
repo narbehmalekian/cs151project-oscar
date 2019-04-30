@@ -3,108 +3,124 @@
 class ObjectNode{ 
 
     constructor(){
-        this.XGAP = 5;
-        this.YGAP = 5; 
-        this.DEFAULT_HEIGHT = 60;
-        this.DEFAULT_WIDTH = 80; 
-        this.topHeight = undefined; 
-        this.name = undefined;
-        let name = new MultiLineString();
-        name.setUnderlined(true);
-        name.setSize(MultiLineString.LARGE);
-        this.parent= new Node();
+        this.height = 200;
+        this.width = 100;
+        this.iconHeight = 0;
+        this.iconWidth = 0;
+        this.x = 50;
+        this.y = 50;
+        this.name = "";
         this.children = [];
-        //add setBound method from Node
-        setBounds(0, 0, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     draw(){
-        let panel = document.getElementByID('graphpanel');
-        //change to javascript
-        var top = getTopRectangle();
-        panel.appendChild(top);
-        panel.appendChild(getBounds()); 
+        const panel = document.getElementById('graphpanel');
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', this.x);
+        rect.setAttribute('y', this.y);
+        rect.setAttribute('height', this.height);
+        rect.setAttribute('width', this.width);
+        rect.setAttribute('stroke-width', '3');
+        rect.setAttribute('stroke','black');
+        rect.setAttribute('fill','white');
+        panel.appendChild(rect);
     }
 
-    getTopRectangle(){
-        //change later after getBounds method
-        return new Rectangle2D.Double(getBounds().getX(),
-                                      getBounds().getY(), getBounds().getWidth(), topHeight);
+    translate(dx, dy) {
+        this.x += dx;
+        this.y += dy;
     }
 
-    addEdge(e, p1, p2){
-        return e instanceof ClassRelationshipEdge && e.getEnd() != undefined; 
+    contains(p){
+        return p.getX()>this.x && p.getX()<(this.x+this.width) && p.getY()>this.y && p.getY()<(this.y+this.height);
     }
 
-    getConnectionPoint(d){
-        if (d.getX() > 0)
-            //change to point later
-            return new Point2D.Double(getBounds().getMaxX(),
-                                      getBounds().getMinY() + topHeight / 2);
-        else
-            return new Point2D.Double(getBounds().getX(),
-                                      getBounds().getMinY() + topHeight / 2);
-    }
-
-    setName(n){
-        let name = n; 
-    }
-
-    getName(){
-        return name; 
+    getBounds(){
+        let rect = new Rectangle()
+        rect.setRect(this.x, this.y, this.width, this.height);
+        return rect
     }
 
     clone(){
-        //copy node clone method
-        let cloned = clone(); 
-        cloned.name = name.clone(); 
-        return cloned; 
+        let clone = new ObjectNode();
+        return clone;
     }
 
-    addNode(n, p){
-        let fields = getChildren();
-        if (n instanceof PointNode) {
-            return true;
+    getConnectionPoint(other){
+        let dx = other.x - this.x;
+        let dy = other.y - this.y;
+        if(Math.abs(dx) > Math.abs(dy)){// horizontal
+            if(dx > 0){// right
+                return new Point(this.x+this.width, this.y+(this.height/2));
+            }
+            else{// left
+                return new Point(this.x, this.y+(this.height/2));
+            }
         }
-        if (!(n instanceof FieldNode)){
-            return false;
-        }
-        if (fields.contains(n)) {
-            return true;
-        }
-        for(let i = 0; i < fields.size() && fields.get(i).getBounds().getY() < p.getY(); i++ ){
-            addChild(i, n); 
-        }
-        return true;
-    }
-
-    removeNode(g, n){
-        let fields = getChildren(); 
-        if (n == this){
-            for (let i = fields.size() - 1; i >= 0; i--){
-                g.removeNode(fields.get(i));
+        else(){// vertical
+            if(dy > 0){// up
+                return new Point(this.x+(this.width/2), this.y);
+            }
+            else{// down
+                return new Point(this.x+(this.width/2), this.y+this.height);
             }
         }
     }
 
-    addChild(n){
-        addChild(n);
-        let b = getBounds();
-        //make rectangle
-        b.add(b.getX(), b.getY() + b.getHeight(),FieldNode.DEFAULT_WIDTH, FieldNode.DEFAULT_HEIGHT);
-        setBounds(b);
-    }
-    
     drawIcon(){
-        
+        this.iconWidth = this.width;
+        this.iconHeight = this.height;
+        const panel = document.getElementById('graphpanel');
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', this.x);
+        rect.setAttribute('y', this.y);
+        rect.setAttribute('height', this.height);
+        rect.setAttribute('width', this.width);
+        rect.setAttribute('stroke-width', '3');
+        rect.setAttribute('stroke','black');
+        rect.setAttribute('fill','white');
+        panel.appendChild(rect);
     }
-    
+
     getIconHeight(){
-        
+        return this.iconHeight;
     }
-    
+
     getIconWidth(){
+        return this.iconWidth;
+    }
+
+    addNode(node,p){// not doing anything with p right now
+        for(var i = 0; i<this.children.length; i++){
+            if(this.children[i]===node){
+                return true; // node is already a child
+            }
+        }
+        this.children.push(node);
+        return true;
+    }
+
+    addEdge(){
         
     }
 
+    removeNode(node){
+        for(var i = 0; i<this.children.length; i++){
+            if(this.children[i]===node){
+                
+            }
+        }
+    }
+
+    removeEdge(){
+        
+    }
+
+    setName(n){
+        this.name = n;
+    }
+
+    getName(){
+        return name;
+    }
 }
