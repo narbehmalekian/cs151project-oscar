@@ -4,7 +4,6 @@ class ToolBar{
 
     constructor(graph) {
         this.tools = []
-		
 		this.prototypes = graph.getNodePrototypes()
 		this.prototypes.concat(graph.getEdgePrototypes())
 		this.currentTool = null

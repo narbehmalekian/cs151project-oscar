@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const deleteButton = document.getElementById('delete')
   const saveButton = document.getElementById('save')
   let selected = null
-  let menuFunct = false;
+  let menuFunct = false
   let dragStartPoint = null
   let dragStartBounds = null
   let rubberBandStart = null
