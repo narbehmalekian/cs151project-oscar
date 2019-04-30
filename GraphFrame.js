@@ -59,6 +59,25 @@ document.addEventListener('DOMContentLoaded', function () {
 	let rubberBandStart = null
 
 	function repaint() {
+  const graph = new Graph()
+  graph.setNodePrototype(new CircleNode())
+  const toolBar = new ToolBar(graph)
+  toolBar.add()
+  graph.draw()
+  let lastSelected = null
+  let mouseDownPoint = null
+  let lastMousePoint = null
+  
+  const panel = document.getElementById('graphpanel')
+  const deleteButton = document.getElementById('delete')
+  const saveButton = document.getElementById('save')
+  let selected = null
+  let menuFunct = false
+  let dragStartPoint = null
+  let dragStartBounds = null
+  let rubberBandStart = null
+
+  function repaint() {
 	 panel.innerHTML = ''
 	 let graphBounds = graph.getBounds()
 	 graph.draw()
