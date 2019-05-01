@@ -206,9 +206,9 @@ class Graph {
    setEdgePrototype(e){
 	   let duplicate = false
 	   for (let i = 0; i < this.edgePrototypes.length; i++){
-		   if (this.edgePrototypes[i].constructor.name === n.constructor.name) duplicate = true
+		   if (this.edgePrototypes[i].constructor.name === e.constructor.name) duplicate = true
 	   }
-	   if (duplciate === false)  this.edgePrototypes.push(n)
+	   if (duplicate === false)  this.edgePrototypes.push(e)
    }
    getNodePrototypes(){
 	   return this.nodePrototypes

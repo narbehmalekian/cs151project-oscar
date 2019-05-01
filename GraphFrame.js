@@ -41,8 +41,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	const objectGraph = new Graph()
 	simpleGraph.setNodePrototype(new CircleNode())
 	let graph = simpleGraph
-	//simpleGraph.setNodePrototype(new ObjectNode())
-	//objectGraph.setEdgePrototype(new ObjectReferenceEdge())
+	objectGraph.setNodePrototype(new ObjectNode())
+	objectGraph.setEdgePrototype(new ObjectReferenceEdge())
 	const simpleToolBar = new ToolBar(simpleGraph)
 	const objectToolBar = new ToolBar(objectGraph)
 	let toolBar = simpleToolBar

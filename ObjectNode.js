@@ -3,13 +3,12 @@
 class ObjectNode{ 
 
     constructor(){
-        this.height = 200;
+        this.height = 150;
         this.width = 100;
-        this.iconHeight = 0;
-        this.iconWidth = 0;
+        this.iconHeight = 10;
+        this.iconWidth = 10;
         this.x = 50;
         this.y = 50;
-        this.name = "";
         this.children = [];
     }
 
@@ -57,7 +56,7 @@ class ObjectNode{
                 return new Point(this.x, this.y+(this.height/2));
             }
         }
-        else(){// vertical
+        else{// vertical
             if(dy > 0){// up
                 return new Point(this.x+(this.width/2), this.y);
             }
