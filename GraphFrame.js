@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	  menuFunct = true
 	})
 
-	document.getElementById("dwn-btn").addEventListener("mousedown", function(){
+	document.getElementById("dwn-btn").addEventListener("click", function(){
 		let textEntry = document.getElementById("text-val").value
 
 		download(textEntry, document.getElementById('graphpanel'))
