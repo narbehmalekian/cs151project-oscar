@@ -1,6 +1,10 @@
 #graphpanel {
     border: solid black thin;
 }
+#toolbar {
+
+	border-style: none none none solid;
+}
 
 /* Navbar container */
 .navbar {
@@ -60,4 +64,16 @@
 
 .w3-show {
 	display: block;
+}
+
+.toolbarButtons {
+	display: inline-block;
+	padding: 6px;
+	border-style: solid solid solid none;
+	
+}
+
+/* Add a grey background color to dropdown links on hover */
+#toolbar div:hover {
+  background-color: #ddd;
 }
