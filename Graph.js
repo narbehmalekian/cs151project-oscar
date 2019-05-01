@@ -53,7 +53,7 @@ class Graph {
          let n = this.nodes[i]
          if (n.contains(p)) return n
       }
-      return null
+      return undefined
    }
 
    /**
@@ -204,6 +204,7 @@ class Graph {
 	   if (duplicate === false)  this.nodePrototypes.push(n)
    }
    setEdgePrototype(e){
+       this.edgePrototypes.push(e)
 	   let duplicate = false
 	   for (let i = 0; i < this.edgePrototypes.length; i++){
 		   if (this.edgePrototypes[i].constructor.name === e.constructor.name) duplicate = true

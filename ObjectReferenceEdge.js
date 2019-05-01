@@ -24,13 +24,13 @@ class ObjectReferenceEdge
     drawIcon(){
         let panel = document.getElementById('graphpanel');
         let l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        l.setAttribute('x1', startX());
-        l.setAttribute('y1', startY());
-        l.setAttribute('x2', endX());
-        l.setAttribute('y2', endY());
+        l.setAttribute('x1', 0);
+        l.setAttribute('y1', 0);
+        l.setAttribute('x2', 20);
+        l.setAttribute('y2', 20);
         l.setAttribute('stroke', 'black');
         l.setAttribute('stroke-width','2');
-        panel.appendChild(l);  
+        panel.appendChild(l);
         return l;
     }
 
@@ -71,19 +71,19 @@ class ObjectReferenceEdge
     }
 
     startX(){
-        getStart().getConnectionPoint().getX();
+        this.start.getConnectionPoint().getX();
     }
 
     startY(){
-        getStart().getConnectionPoint().getY();
+        this.start.getConnectionPoint().getY();
     }
 
     endX(){
-        getEnd().getConnectionPoint().getX();
+        this.end.getConnectionPoint().getX();
     }
 
     endY(){
-        getEnd().getConnectionPoint().getY();
+        this.end.getConnectionPoint().getY();
     }
 
 
@@ -93,15 +93,10 @@ class ObjectReferenceEdge
     }
 
     getIconWidth(){
-        return 10;
+        return 20;
     }
 
     getIconHeight(){
-        return 10;
+        return 20;
     }
-
-
-
-
-
 }

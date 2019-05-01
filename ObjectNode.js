@@ -5,11 +5,12 @@ class ObjectNode{
     constructor(){
         this.height = 150;
         this.width = 100;
-        this.iconHeight = 10;
-        this.iconWidth = 10;
+        this.iconHeight = 20;
+        this.iconWidth = 20;
         this.x = 50;
         this.y = 50;
         this.children = [];
+        this.edges = [];
     }
 
     draw(){
@@ -71,25 +72,26 @@ class ObjectNode{
         this.iconHeight = this.height;
         const panel = document.getElementById('graphpanel');
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-        rect.setAttribute('x', this.x);
-        rect.setAttribute('y', this.y);
-        rect.setAttribute('height', this.height);
-        rect.setAttribute('width', this.width);
+        rect.setAttribute('x', 0);
+        rect.setAttribute('y', 0);
+        rect.setAttribute('height', this.iconHeight);
+        rect.setAttribute('width', this.iconWidth);
         rect.setAttribute('stroke-width', '3');
         rect.setAttribute('stroke','black');
         rect.setAttribute('fill','white');
         panel.appendChild(rect);
+        return rect;
     }
 
     getIconHeight(){
-        return this.iconHeight;
+        return 20;
     }
 
     getIconWidth(){
-        return this.iconWidth;
+        return 20;
     }
 
-    addNode(node,p){// not doing anything with p right now
+    addNode(node,p){ // not doing anything with p right now
         for(var i = 0; i<this.children.length; i++){
             if(this.children[i]===node){
                 return true; // node is already a child
@@ -99,8 +101,8 @@ class ObjectNode{
         return true;
     }
 
-    addEdge(){
-        
+    addEdge(e){
+        this.edges.push(e);
     }
 
     removeNode(node){

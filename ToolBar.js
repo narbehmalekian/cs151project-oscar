@@ -5,7 +5,12 @@ class ToolBar{
     constructor(graph) {
         this.tools = []
 		this.prototypes = graph.getNodePrototypes()
-		this.prototypes.concat(graph.getEdgePrototypes())
+		this.prototypes = this.prototypes.concat(graph.getEdgePrototypes())
+        var x = undefined;
+        for(x in this.prototypes){
+            console.log(this.prototypes[x].constructor.name)
+            
+        }
 		this.currentTool = null
 	}
 
