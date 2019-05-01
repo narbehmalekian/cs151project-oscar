@@ -21,9 +21,31 @@ function drawGrabber(x, y)
   panel.appendChild(square)
 }
 
+/**
+* Downloads the graph object to a file
+* @param filename the name for the downloaded file
+* @param graphSave the graph to be saved
+*/
 function download(filename, graphSave) {
+	//get svg element.
+	var svg = graphSave
+
+	//get svg source.
+	var serializer = new XMLSerializer();
+	var source = serializer.serializeToString(svg);
+
+	//add name spaces.
+	if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+		source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+	}
+	if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+		source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+	}
+
+	//add xml declaration
+	source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
     let element = document.createElement('a')
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(graphSave))
+    element.setAttribute('href', 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(source))
     element.setAttribute('download', filename)
 
     element.style.display = 'none'
@@ -78,6 +100,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 	}
 
+  /**
+  * Updates the graphpanel space by repainting all of the current objects
+  */
   function repaint() {
 		panel.innerHTML = ''
 		let graphBounds = graph.getBounds()
@@ -105,6 +130,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		}
 	}
 
+	/**
+	* Returns the mouseclick on the graphpanel as a point object
+	* @param a click event
+	* @return a point object
+	*/
 	function mouseLocation(event) {
 	  var rect = panel.getBoundingClientRect()
 	  let p = new Point()
@@ -113,6 +143,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	}
 
+	/**
+	* Removes the selected object, a node or an edge
+	* @param the object to be removed
+	*/
 	function removeSelected(sel){
 	  if (isNode(sel))
 	  {
@@ -126,7 +160,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	  repaint()
 	}
 
-
+	//Event listener for panel click functionality (selecting and creating new nodes/edges)
 	panel.addEventListener('mousedown', event => {
 	   let mousePoint = mouseLocation(event)
 	   let n = graph.findNode(mousePoint) 
@@ -175,6 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	   repaint()
 	})
 
+	//Event listener for dragging objects
 	panel.addEventListener('mousemove', event => {
 	if (dragStartPoint === null) return
 	let mousePoint = mouseLocation(event)
@@ -189,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	}
 	})
 
+	//Event listener for handling repainting and cloning
 	panel.addEventListener('mouseup', event => {
 	   let tool = toolBar.getSelectedTool()
 	   if (rubberBandStart !== null)
@@ -210,12 +246,14 @@ document.addEventListener('DOMContentLoaded', function () {
 	   selected = null;
 	})
 
+	//delete object functionality
 	deleteButton.addEventListener('mousedown', event => {
 	  if (isNode(lastSelected)) graph.removeNode(lastSelected)
 	  else if (isEdge(lastSelected)) graph.removeEdge(lastSelected)
 	  repaint()
 	})
 
+	//reveals actualy save feature on nav bar
 	saveButton.addEventListener('mousedown', event => {
 	  let textBox = document.getElementById('text-val')
 	  let saveButton = document.getElementById('dwn-btn')
@@ -224,15 +262,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	  menuFunct = true
 	})
 
-	document.getElementById('open').addEventListener('mousedown', event => {
-		menuFunct = true
-	})
-
 	document.getElementById("dwn-btn").addEventListener("click", function(){
 		let textEntry = document.getElementById("text-val").value
 
-		download(textEntry, graph)
-		}, false)
+		download(textEntry, document.getElementById('graphpanel'))
+		})
 
 	document.addEventListener('mousedown', event => {
 		let x = document.getElementById('editdropdown')
