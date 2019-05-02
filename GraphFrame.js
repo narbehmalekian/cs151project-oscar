@@ -99,17 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
             toolBar.add()
         })
     }
-    
-    function showProperties(selected){
-        var table = document.createElement('table');
-        var tr = document.createElement('tr');
-        var td = document.createElement('td');
-        td.innerHTML = "test";
-        table.appendChild(tr);
-        tr.appendChild(td);
-        
-        document.body.appendChild(table);
-    }
 
     /**
   * Updates the graphpanel space by repainting all of the current objects
@@ -119,7 +108,6 @@ document.addEventListener('DOMContentLoaded', function () {
         let graphBounds = graph.getBounds()
         graph.draw()
         if (selected !== undefined){
-            showProperties(selected);
             if (!graph.getNodes().includes(selected)
                 && !graph.getEdges().includes(selected)) 
             {
