@@ -99,8 +99,8 @@ class CircleNode {
       @param e the edge to add
       @return true if the edge was added
    */
-   addEdge(e, p1, p2){
-		if (e.getEnd() !== null){
+   addEdge(e){
+		if (e.getEnd() !== undefined){
 			return true
 		}
 		else return false;

@@ -6,12 +6,7 @@ class ToolBar{
         this.tools = []
 		this.prototypes = graph.getNodePrototypes()
 		this.prototypes = this.prototypes.concat(graph.getEdgePrototypes())
-        var x = undefined;
-        for(x in this.prototypes){
-            console.log(this.prototypes[x].constructor.name)
-            
-        }
-		this.currentTool = null
+		this.currentTool = undefined
 	}
 
     getSelectedTool()
@@ -31,7 +26,7 @@ class ToolBar{
 		grabButton.setAttribute('name', 'Grabber')
 		grabButton.setAttribute('class', 'toolbarButtons')
 		grabButton.addEventListener('mousedown', event => {
-			this.currentTool = null
+			this.currentTool = undefined
 		})
 		div.appendChild(grabButton)
 		const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")
@@ -64,7 +59,7 @@ class ToolBar{
 						found = true
 					}
 				}
-				if (!found) this.currentTool = null
+				if (!found) this.currentTool = undefined
 			})
 			div.appendChild(newButton)
 			const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg")

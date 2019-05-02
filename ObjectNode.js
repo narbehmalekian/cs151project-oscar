@@ -51,18 +51,26 @@ class ObjectNode{
         let dy = other.y - this.y;
         if(Math.abs(dx) > Math.abs(dy)){// horizontal
             if(dx > 0){// right
-                return new Point(this.x+this.width, this.y+(this.height/2));
+                var p = new Point();
+                p.setPoint(this.x+this.width, this.y+(this.height/2))
+                return p;
             }
             else{// left
-                return new Point(this.x, this.y+(this.height/2));
+                var p = new Point();
+                p.setPoint(this.x, this.y+(this.height/2))
+                return p;
             }
         }
         else{// vertical
-            if(dy > 0){// up
-                return new Point(this.x+(this.width/2), this.y);
+            if(dy < 0){// up
+                var p = new Point();
+                p.setPoint(this.x+(this.width/2), this.y)
+                return p;
             }
             else{// down
-                return new Point(this.x+(this.width/2), this.y+this.height);
+                var p = new Point();
+                p.setPoint(this.x+(this.width/2), this.y+this.height)
+                return p;
             }
         }
     }
@@ -102,19 +110,24 @@ class ObjectNode{
     }
 
     addEdge(e){
-        this.edges.push(e);
+        if(e !== undefined){
+
+            this.edges.push(e);
+            return true
+        }
+        return false
     }
 
     removeNode(node){
         for(var i = 0; i<this.children.length; i++){
             if(this.children[i]===node){
-                
+
             }
         }
     }
 
     removeEdge(){
-        
+
     }
 
     setName(n){
