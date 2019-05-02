@@ -72,18 +72,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	graph.draw()
 	addGraphType(simpleGraph, 'Simple Graph', simpleToolBar)
 	addGraphType(objectGraph, 'Object Diagram', objectToolBar)
-	let lastSelected = null
-	let mouseDownPoint = null
-	let lastMousePoint = null
+	let lastSelected = undefined
+	let mouseDownPoint = undefined
+	let lastMousePoint = undefined
 
 	const panel = document.getElementById('graphpanel')
 	const deleteButton = document.getElementById('delete')
 	const saveButton = document.getElementById('save')
-	let selected = null
+	let selected = undefined
 	let menuFunct = false
-	let dragStartPoint = null
-	let dragStartBounds = null
-	let rubberBandStart = null
+	let dragStartPoint = undefined
+	let dragStartBounds = undefined
+	let rubberBandStart = undefined
 	
 	function addGraphType(graphType, title, toolbar) {
 		let dropdown = document.getElementById('graphdropdown')
@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		panel.innerHTML = ''
 		let graphBounds = graph.getBounds()
 		graph.draw()
-		if (selected !== null){
+		if (selected !== undefined){
 		 if (!graph.getNodes().includes(selected)
 			   && !graph.getEdges().includes(selected)) 
 		 {
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	  {
 		 graph.removeEdge(sel)
 	  }          
-	  selected = null
+	  selected = undefined
 	  repaint()
 	}
 
@@ -166,13 +166,13 @@ document.addEventListener('DOMContentLoaded', function () {
 	   let n = graph.findNode(mousePoint) 
 	   let e = graph.findEdge(mousePoint);
 	   let tool = toolBar.getSelectedTool()
-	   if (tool === null) // select
+	   if (tool === undefined) // select
 	   {
-		  if (e !== null)
+		  if (e !== undefined)
 		  {
 			 selected = e
 		  }
-		  else if (n !== null)
+		  else if (n !== undefined)
 		  {
 			 selected = n
 			 dragStartPoint = mousePoint
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  }
 		  else 
 		  {
-			 selected = null
+			 selected = undefined
 		  }
 	   }
 	   else if (isNode(tool))
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			 dragStartPoint = mousePoint
 			 dragStartBounds = newNode.getBounds()
 		  }
-		  else if (n !== null)
+		  else if (n !== undefined)
 		  {
 			 selected = n
 			 dragStartPoint = mousePoint
@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	   }
 	   else if (isEdge(tool))
 	   {
-		  if (n !== null) rubberBandStart = mousePoint
+		  if (n !== undefined) rubberBandStart = mousePoint
 	   }
 	   lastMousePoint = mousePoint
 	   lastSelected = selected
@@ -211,9 +211,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	//Event listener for dragging objects
 	panel.addEventListener('mousemove', event => {
-	if (dragStartPoint === null) return
+	if (dragStartPoint === undefined) return
 	let mousePoint = mouseLocation(event)
-	if (selected !== null) {
+	if (selected !== undefined) {
 	  const bounds = selected.getBounds();
 	  selected.translate(
 		dragStartBounds.getX() - bounds.getX()
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	//Event listener for handling repainting and cloning
 	panel.addEventListener('mouseup', event => {
 	   let tool = toolBar.getSelectedTool()
-	   if (rubberBandStart !== null)
+	   if (rubberBandStart !== undefined)
 	   {
 		  let mousePoint = mouseLocation(event)
 		  let proto = tool
@@ -239,11 +239,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	   repaint()
 
-	   lastMousePoint = null;
-	   dragStartBounds = null;
-	   rubberBandStart = null;
+	   lastMousePoint = undefined;
+	   dragStartBounds = undefined;
+	   rubberBandStart = undefined;
 	   lastSelected = selected;
-	   selected = null;
+	   selected = undefined;
 	})
 
 	//delete object functionality

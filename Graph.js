@@ -17,34 +17,9 @@ class Graph {
    }
 
    /**
-      Adds an edge to the graph that joins the nodes containing
-      the given points. If the points aren't both inside nodes,
-      then no edge is added.
-      @param e the edge to add
-      @param p1 a point in the starting node
-      @param p2 a point in the ending node
-   */
-   connect(e, p1, p2)
-   {
-      let n1 = findNode(p1)
-      let n2 = findNode(p2)
-      if (n1 !== null && n2 !== null)
-      {
-         e.connect(n1, n2);
-         if (n1.addEdge(e, p1, p2) && e.getEnd() !== null)
-         {
-			n2.addEdge(e, p1, p2)
-            this.edges.push(e)
-			return true
-         }
-      }
-      return false
-   }
-
-   /**
       Finds a node containing the given point.
       @param p a point
-      @return a node containing p or null if no nodes contain p
+      @return a node containing p or UNDEFINED if no nodes contain p
    */
    findNode(p)
    {
@@ -57,9 +32,34 @@ class Graph {
    }
 
    /**
+      Adds an edge to the graph that joins the nodes containing
+      the given points. If the points aren't both inside nodes,
+      then no edge is added.
+      @param e the edge to add
+      @param p1 a point in the starting node
+      @param p2 a point in the ending node
+   */
+   connect(e, p1, p2)
+   {
+      let n1 = findNode(p1)
+      let n2 = findNode(p2)
+      if (n1 !== undefined && n2 !== undefined)
+      {
+         e.connect(n1, n2);
+         if (n1.addEdge(e, p1, p2) && e.getEnd() !== undefined)
+         {
+			n2.addEdge(e, p1, p2)
+            this.edges.push(e)
+			return true
+         }
+      }
+      return false
+   }
+
+   /**
       Finds an edge containing the given point.
       @param p a point
-      @return an edge containing p or null if no edges contain p
+      @return an edge containing p or UNDEFINED if no edges contain p
    */
    findEdge(p)
    {
@@ -68,7 +68,7 @@ class Graph {
          let e = this.edges[i]
          if (e.contains(p)) return e
       }
-      return null
+      return undefined
    }
    
    /**
@@ -137,7 +137,7 @@ class Graph {
       {
          let n = this.nodes[i]
          let b = n.getBounds()
-         if (r === null) r = b
+         if (r === undefined) r = b
          else r.add(b)
       }
       for (let i = 0; i < this.edges.length; i++)
@@ -149,7 +149,7 @@ class Graph {
 	  temp.setLocation(r.getX(), r.getY())
 	  temp.setWidth(r.getWidth() +4)
 	  temp.setHeight(r.getHeight() + 4)
-      return (r === null ? new Rectangle() : temp)
+      return (r === undefined ? new Rectangle() : temp)
    }
    
    getMinBounds() { return this.minBounds }
