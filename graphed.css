@@ -77,3 +77,10 @@
 #toolbar div:hover {
   background-color: #ddd;
 }
+
+table,td{
+    border-collapse: collapse;
+    border:2px solid black;
+    width:50%;
+    padding: 5px;
+}

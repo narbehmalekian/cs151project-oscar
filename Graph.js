@@ -77,7 +77,6 @@ class Graph {
    */
     draw()
     {
-
         for (let i = 0; i < this.nodes.length; i++)
         {
             let n = this.nodes[i]
