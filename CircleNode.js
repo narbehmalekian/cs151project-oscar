@@ -7,7 +7,7 @@ class CircleNode {
 		this.y = 0
 		this.iconHeight = 0
 		this.iconWidth = 0
-		this.size = 20
+		this.size = 40
 	}
     
     getBounds(){
@@ -56,12 +56,13 @@ class CircleNode {
 	
 	drawIcon()
 	{
-		this.iconHeight = this.size
-		this.iconWidth = this.size
+		let size = this.size / 2
+		this.iconHeight = size
+		this.iconWidth = size
 		const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
-		circle.setAttribute('cx', this.x + this.size / 2)
-		circle.setAttribute('cy', this.y + this.size / 2)
-		circle.setAttribute('r', this.size / 2)
+		circle.setAttribute('cx', this.x + size / 2)
+		circle.setAttribute('cy', this.y + size / 2)
+		circle.setAttribute('r', size / 2)
 		circle.setAttribute('fill', 'goldenrod')
 		return circle
 	}

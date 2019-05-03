@@ -54,7 +54,7 @@ class ToolBar{
 				for (let i = 0; i < this.prototypes.length; i++)
 				{
 					if (this.prototypes[i].constructor.name === name){
-						console.log("true")
+						console.log(this.prototypes[i].constructor.name)
 						this.currentTool = this.prototypes[i]
 						found = true
 					}
