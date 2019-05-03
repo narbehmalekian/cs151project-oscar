@@ -41,12 +41,14 @@ class CircleNode {
     }
     
 	getConnectionPoint(other){
-	  let centerX = x + this.size / 2
-      let centerY = y + this.size / 2
-      let dx = other.getX() - centerX
-      let dy = other.getY() - centerY
+	  let centerX = this.x + this.size / 2
+      let centerY = this.y + this.size / 2
+      let dx = other.x - centerX
+      let dy = other.y - centerY
       let distance = Math.sqrt(dx * dx + dy * dy)
-      if (distance === 0) return other
+	  let point  = new Point()
+	  point.setPoint(other.x, other.y)
+      if (distance === 0) return point
       else {
 		  let p = new Point()
 		   p.setPoint(centerX + dx * (this.size / 2) / distance, centerY + dy * (this.size / 2) / distance)

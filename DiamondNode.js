@@ -76,14 +76,24 @@ class DiamondNode {
 	getConnectionPoint(other){
 	  let centerX = this.x + this.size / 2
       let centerY = this.y + this.size / 2
-      let dx = other.getX() - centerX
-      let dy = other.getY() - centerY
+      let dx = other.x - centerX
+      let dy = other.y - centerY
       let distance = Math.sqrt(dx * dx + dy * dy)
 	  let newPoint = new Point()
-      if (dx >= dy && dx >= -dy) return newPoint.setPoint(this.x + this.size, centerY)
-      if (dx < dy && dx >= -dy) return newPoint.setPoint(centerX, this.y + this.size)
-      if (dx >= dy && dx < -dy) return newPoint.setPoint(centerX, this.y)
-	  return newPoint.setPoint(this.x, centerY)
+      if (dx >= dy && dx >= -dy){
+		  newPoint.setPoint(this.x + this.size, centerY)
+		  return newPoint
+	  }
+      if (dx < dy && dx >= -dy){
+		  newPoint.setPoint(centerX, this.y + this.size)
+		  return newPoint
+	  }
+      if (dx >= dy && dx < -dy){
+		  newPoint.setPoint(centerX, this.y)
+		  return newPoint
+	  }
+	  newPoint.setPoint(this.x, centerY)
+	  return newPoint
 	}
 	
 	drawIcon()

@@ -63,6 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const objectGraph = new Graph()
     simpleGraph.setNodePrototype(new CircleNode())
 	simpleGraph.setNodePrototype(new DiamondNode())
+	simpleGraph.setEdgePrototype(new ObjectReferenceEdge())
+	simpleGraph.setEdgePrototype(new HVEdge())
     let graph = simpleGraph
     objectGraph.setNodePrototype(new ObjectNode())
     objectGraph.setEdgePrototype(new ObjectReferenceEdge())
