@@ -105,7 +105,7 @@ class Graph {
         {
             let e = this.edges[i]
             if (e.getStart() === n || e.getEnd() === n)
-                removeEdge(e)
+                this.removeEdge(e)
         }
         let index = this.nodes.indexOf(n)
         this.nodes.splice(index, 1)

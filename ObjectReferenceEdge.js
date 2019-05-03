@@ -3,9 +3,9 @@
 class ObjectReferenceEdge
 {
     constructor(s, e){
-        this.start = s;
-        this.end = e;
-        this.ENDSIZE = 10;
+        this.start = s
+        this.end = e
+        this.ENDSIZE = 10
     }
 
     draw()
@@ -32,12 +32,6 @@ class ObjectReferenceEdge
         panel.appendChild(l);
         return l;
     }
-    
-    getConnectionPoints(){
-        var line = new Line();
-        line.setPoints(50,50,200,200);
-        return line//(new Line()).setPoints(this.start.getConnectionPoint(this.end),this.end.getConnectionPoint(this.start));
-    }
 
     getStart(){ // start node
         return this.start;
@@ -48,30 +42,23 @@ class ObjectReferenceEdge
     }
 
     connect(n1, n2){
-        this.start = n1;
-        this.end = n2;
-        this.start.addEdge(this);
-        this.end.addEdge(this);
-        this.draw();
+        this.start = n1
+        this.end = n2
+        this.start.addEdge(this)
+        this.end.addEdge(this)
+        this.draw()
     }
 
     contains(p){
-        if(this.startX()<this.endX()){
-            var p1 = new Point(this.startX(),this.startY());
-            var p2 = new Point(this.endX(),this.endY());
-        }
-        else{
-            var p1 = new Point(this.endX(),this.endY());
-            var p2 = new Point(this.startX(),this.startY());
-        }
-        var dy=p2.getY()-p1.getY();
-        var dx=p2.getX()-p1.getX();
-        if(dx===0){
-            dx=1;
-        }
-        var m=dy/dx;
-        return Math.abs((p.getY()-p2.getY())-(m*(p.getX()-p2.getX())))<1;
-    }
+      const MAX_DIST = 5
+	  let line = this.getConnectionPoints()
+	  let dist = line.ptSegDist(line.getX1(), line.getY1(), line.getX2(), line.getY2(), p.getX(), p.getY()) 
+	  if (dist < MAX_DIST){
+		  console.log('test')
+		  return true
+	  }
+	  return false
+	}
 
     getBounds(){
         let rect = new Rectangle(Math.min(this.startX(),this.endX()),Math.min(this.startY(),this.endY()),Math.abs(this.startX()-this.endX()),Math.abs(this.startY()-this.endY()));
@@ -107,4 +94,17 @@ class ObjectReferenceEdge
     getIconHeight(){
         return 20;
     }
+	
+   getConnectionPoints()
+   {
+      let startBounds = this.start.getBounds()
+      let endBounds = this.end.getBounds()
+      let startCenter = new Point()
+	  startCenter.setPoint(startBounds.getCenterX(), startBounds.getCenterY())
+      let endCenter = new Point()
+	  endCenter.setPoint(endBounds.getCenterX(), endBounds.getCenterY())
+      let l = new Line()
+	  l.setPoints(this.start.getConnectionPoint(endCenter), this.end.getConnectionPoint(startCenter))
+	  return l
+   }
 }

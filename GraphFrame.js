@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	simpleGraph.setNodePrototype(new DiamondNode())
 	simpleGraph.setEdgePrototype(new ObjectReferenceEdge())
 	simpleGraph.setEdgePrototype(new HVEdge())
+	simpleGraph.setEdgePrototype(new VHEdge())
     let graph = simpleGraph
     objectGraph.setNodePrototype(new ObjectNode())
     objectGraph.setEdgePrototype(new ObjectReferenceEdge())
@@ -240,7 +241,6 @@ document.addEventListener('DOMContentLoaded', function () {
                               rubberBandStart, mousePoint))
                 selected = newEdge
         }
-
         repaint()
 
         lastMousePoint = undefined;

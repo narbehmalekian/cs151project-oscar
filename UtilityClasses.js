@@ -54,6 +54,8 @@ class Rectangle {
 		let y2 = Math.max(this.y + this.height, r.getMaxY())
 		this.setRect(x1, y1, x2 - x1, y2 - y1);
 	}
+	getCenterX(){ return this.x + (this.width / 2) }
+	getCenterY(){ return this.y + (this.height / 2) }
 }
 
 class Point {
@@ -102,6 +104,61 @@ class Line {
 	getY2(){
 		return this.point2.getY()
 	}
+	ptSegDist(x1, y1, x2, y2, px, py) 
+	{
+        let num = Math.sqrt(this.ptSegDistSq(x1, y1, x2, y2, px, py))
+		console.log(num)
+		return num
+	}
+	ptSegDistSq(x1, y1, x2, y2, px, py) 
+	{
+        // Adjust vectors relative to x1,y1
+        // x2,y2 becomes relative vector from x1,y1 to end of segment
+        x2 -= x1
+        y2 -= y1
+        // px,py becomes relative vector from x1,y1 to test point
+        px -= x1
+        py -= y1
+        let dotprod = px * x2 + py * y2
+        let projlenSq = null
+        if (dotprod <= 0) {
+            // px,py is on the side of x1,y1 away from x2,y2
+            // distance to segment is length of px,py vector
+            // "length of its (clipped) projection" is now 0.0
+            projlenSq = 0
+        } else {
+            // switch to backwards vectors relative to x2,y2
+            // x2,y2 are already the negative of x1,y1= >x2,y2
+            // to get px,py to be the negative of px,py= >x2,y2
+            // the dot product of two negated vectors is the same
+            // as the dot product of the two normal vectors
+            px = x2 - px
+            py = y2 - py
+            dotprod = px * x2 + py * y2
+            if (dotprod <= 0) {
+                // px,py is on the side of x2,y2 away from x1,y1
+                // distance to segment is length of (backwards) px,py vector
+                // "length of its (clipped) projection" is now 0.0
+                projlenSq = 0
+            } else {
+                // px,py is between x1,y1 and x2,y2
+                // dotprod is the length of the px,py vector
+                // projected on the x2,y2= >x1,y1 vector times the
+                // length of the x2,y2= >x1,y1 vector
+                projlenSq = dotprod * dotprod / (x2 * x2 + y2 * y2)
+            }
+        }
+        // Distance to line is now the length of the relative point
+        // vector minus the length of its projection onto the line
+        // (which is zero if the projection falls outside the range
+        //  of the line segment).
+        let lenSq = px * px + py * py - projlenSq
+        if (lenSq <  0) {
+            lenSq = 0
+        }
+        return lenSq
+	}
+
 }
 
 class Ellipse {

@@ -1,6 +1,6 @@
 'use strict'
 
-class HVEdge
+class VHEdge
 {
     constructor(s, e){
         this.start = s;
@@ -14,12 +14,12 @@ class HVEdge
         let l1 = document.createElementNS('http://www.w3.org/2000/svg', 'line')
         l1.setAttribute('x1', this.getStart().getConnectionPoint(this.getEnd()).getX())
         l1.setAttribute('y1', this.getStart().getConnectionPoint(this.getEnd()).getY())
-        l1.setAttribute('x2', this.getEnd().getConnectionPoint(this.getStart()).getX())
-        l1.setAttribute('y2', this.getStart().getConnectionPoint(this.getEnd()).getY())
+        l1.setAttribute('x2', this.getStart().getConnectionPoint(this.getEnd()).getX())
+        l1.setAttribute('y2', this.getEnd().getConnectionPoint(this.getStart()).getY())
         l1.setAttribute('style','stroke:rgb(0,0,0);stroke-width:2')
 		let l2 = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-        l2.setAttribute('x1', this.getEnd().getConnectionPoint(this.getStart()).getX())
-        l2.setAttribute('y1', this.getStart().getConnectionPoint(this.getEnd()).getY())
+        l2.setAttribute('x1', this.getStart().getConnectionPoint(this.getEnd()).getX())
+        l2.setAttribute('y1', this.getEnd().getConnectionPoint(this.getStart()).getY())
         l2.setAttribute('x2', this.getEnd().getConnectionPoint(this.getStart()).getX())
         l2.setAttribute('y2', this.getEnd().getConnectionPoint(this.getStart()).getY())
         l2.setAttribute('style','stroke:rgb(0,0,0);stroke-width:2')
@@ -29,7 +29,7 @@ class HVEdge
 
     drawIcon(){
 		let poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
-		poly.setAttribute('points', '0 0, 20 0, 20 20')
+		poly.setAttribute('points', '0 0, 0 20, 20 20')
 		poly.setAttribute('stroke', 'black')
 		poly.setAttribute('fill', 'none')
         poly.setAttribute('stroke-width','3')
@@ -64,7 +64,7 @@ class HVEdge
       let p1 = connectionPoints.getPoint1()
       let p2 = connectionPoints.getPoint2()
       let p = new Point()
-	  p.setPoint(p2.getX(), p1.getY())
+	  p.setPoint(p1.getX(), p2.getY())
 	  let line1 = new Line()
 	  line1.setPoints(p1, p)
 	  let line2 = new Line()
@@ -96,7 +96,7 @@ class HVEdge
 
 
     clone(){
-        let clone = new HVEdge();
+        let clone = new VHEdge();
         return clone;
     }
 
