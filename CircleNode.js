@@ -2,6 +2,9 @@
 
 class CircleNode {
     
+	/**
+	* Constructs a new circle Node
+	*/
     constructor() { 
 		this.x = 0
 		this.y = 0
@@ -10,26 +13,47 @@ class CircleNode {
 		this.size = 40
 	}
     
+	/**
+	* Gets the bounding rectangle for the Circle Node shape
+	* @return a rectangle object
+	*/
     getBounds(){
         let rect = new Rectangle()
 		rect.setRect(this.x, this.y, this.size, this.size)
 		return rect
     }
     
+	/**
+	* Creates a new Circle Node object and returns that new object
+	* @return a CircleNode object
+	*/
 	clone() { 
 	 let clone = new CircleNode()
 	 return clone
 	}
     
+	/**
+	* Returns true if a point is inside the Circle Node object
+	* @param p a point object
+	* @return a boolean value
+	*/
     contains(p){
       return (this.x + this.size / 2 - p.getX()) ** 2 + (this.y + this.size / 2 - p.getY()) ** 2 <= this.size ** 2 / 4
     }
     
+	/**
+	* Translates the location of the shape
+	* @param dx the change in x
+	* @param dy the change in y
+	*/
     translate(dx, dy) {
       this.x += dx
       this.y += dy
     }
     
+	/**
+	* Draws the Circle Node on the graph panel context
+	*/
     draw(){
       const panel = document.getElementById('graphpanel')
       const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
@@ -40,6 +64,10 @@ class CircleNode {
       panel.appendChild(circle)
     }
     
+	/**
+	* Returns the connection point from this Circle Node to another ndoe
+	* @param other the other node
+	*/
 	getConnectionPoint(other){
 	  let centerX = this.x + this.size / 2
       let centerY = this.y + this.size / 2
@@ -56,6 +84,10 @@ class CircleNode {
 	  }
 	}
 	
+	/**
+	* Returns a graphic of the Circle Node object
+	* @return an SVG element
+	*/
 	drawIcon()
 	{
 		let size = this.size / 2
@@ -69,10 +101,18 @@ class CircleNode {
 		return circle
 	}
 	
+	/**
+	* Returns the height of the Circle Node graphic
+	* @return a number
+	*/
 	getIconHeight(){
 		 return this.iconHeight
 	}
 	
+	/**
+	* Returns the width of the Circle Node graphic
+	* @return a number
+	*/
 	getIconWidth(){ return this.iconWidth }
 	
 
@@ -82,7 +122,7 @@ class CircleNode {
       @param p the point at which the node is being added
       @return true if this node accepts the given node as a child
    */
-    addNode(n, p) { return false; } 
+    addNode(n, p) { return false } 
 
 
    /**
@@ -92,6 +132,11 @@ class CircleNode {
    */
    removeNode(g, n) { }
    
+   /**
+      Notifies this node that an edge is being removed.
+      @param g the ambient graph
+      @param e the edge to be removed
+   */
    removeEdge(g, e) { }
    
    /**
@@ -106,6 +151,6 @@ class CircleNode {
 		if (e.getEnd() !== undefined){
 			return true
 		}
-		else return false;
+		else return false
    }
  }

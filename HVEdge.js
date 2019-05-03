@@ -1,13 +1,25 @@
 'use strict'
-
+/**
+* A horizontal-vertical graph edge line
+* @author Jeren Mckey
+*/
 class HVEdge
 {
+	/** 
+	* Constructs a new HVEdge
+	* @param s the starting node
+	* @param e the ending node
+	*/
+	
     constructor(s, e){
         this.start = s;
         this.end = e;
         this.ENDSIZE = 10;
     }
 
+	/**
+	* Draws the HVEdge on the graphpanel context
+	*/
     draw()
     {
         let panel = document.getElementById('graphpanel');
@@ -27,6 +39,10 @@ class HVEdge
 		panel.appendChild(l2)   
     }
 
+	/**
+	* Returns a graphic of the HVEdge object
+	* @return an SVG element
+	*/
     drawIcon(){
 		let poly = document.createElementNS('http://www.w3.org/2000/svg', 'polyline')
 		poly.setAttribute('points', '0 0, 20 0, 20 20')
@@ -36,20 +52,27 @@ class HVEdge
         return poly;
     }
     
-    getConnectionPoints(){
-        var line = new Line();
-        line.setPoints(50,50,200,200);
-        return line//(new Line()).setPoints(this.start.getConnectionPoint(this.end),this.end.getConnectionPoint(this.start));
-    }
-
+	/**
+	* Returns the starting node for this edge
+	* @return a node object
+	*/
     getStart(){ // start node
         return this.start;
     }
 
+	/**
+	* Returns the starting node for this edge
+	* @return a node object
+	*/
     getEnd(){ // end node
         return this.end;
     }
 
+	/**
+	* Sets the starting and end nodes that are connected by this edge
+	* @param n1 the first node
+	* @param n2 the second node
+	*/
     connect(n1, n2){
         this.start = n1;
         this.end = n2;
@@ -58,6 +81,11 @@ class HVEdge
         this.draw();
     }
 
+	/**
+	* Returns true if a point is inside the HVEdge object
+	* @param aPoint a point object
+	* @return a boolean value
+	*/
     contains(aPoint){
       const MAX_DIST = 5
 	  let connectionPoints = this.getConnectionPoints()
@@ -73,40 +101,77 @@ class HVEdge
 		MAX_DIST || line2.ptSegDist(line2.getX1(), line2.getY1(), line2.getX2(), line2.getY2(), aPoint.getX(), aPoint.getY()) < MAX_DIST
 	}
 
+	/**
+	* Gets the bounding rectangle for the HVEdge shape
+	* @return a rectangle object
+	*/
     getBounds(){
-        let rect = new Rectangle(Math.min(this.startX(),this.endX()),Math.min(this.startY(),this.endY()),Math.abs(this.startX()-this.endX()),Math.abs(this.startY()-this.endY()));
-        return rect;
+        let rect = new Rectangle()
+		return rect
     }
 
+	/** 
+	* Returns the starting point x-coordinate
+	* @return a number
+	*/
     startX(){
         this.start.getConnectionPoint(this.end).getX();
     }
 
+	/** 
+	* Returns the starting point y-coordinate
+	* @return a number
+	*/
     startY(){
         this.start.getConnectionPoint(this.end).getY();
     }
 
+	/** 
+	* Returns the ending point x-coordinate
+	* @return a number
+	*/
     endX(){
         this.end.getConnectionPoint(this.start).getX();
     }
 
+	/** 
+	* Returns the ending point y-coordinate
+	* @return a number
+	*/
     endY(){
         this.end.getConnectionPoint(this.start).getY();
     }
 
 
+	/**
+	* Creates a new HVEdge object and returns that new object
+	* @return a HVEdge object
+	*/
     clone(){
         let clone = new HVEdge();
         return clone;
     }
 
+	/**
+	* Returns the width of the HVEdge graphic
+	* @return a number
+	*/
     getIconWidth(){
         return 20;
     }
 
+	/**
+	* Returns the height of the HVEdge graphic
+	* @return a number
+	*/
     getIconHeight(){
         return 20;
     }
+	
+	/**
+	* Returns the height of the HVEdge Node graphic
+	* @return a number
+	*/
 	getConnectionPoints()
    {
       let startBounds = this.start.getBounds()

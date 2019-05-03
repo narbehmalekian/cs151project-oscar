@@ -2,6 +2,7 @@
 
 /**
    A graph consisting of selectable nodes and edges.
+   @author Jeren Mckey
 */
 class Graph {
     /**
@@ -152,7 +153,16 @@ class Graph {
         return (r === undefined ? new Rectangle() : temp)
     }
 
+	/**
+	* Returns the minimum bounds of the graph
+	* @return a rectangle object
+	*/
     getMinBounds() { return this.minBounds }
+	
+	/**
+	* Sets the minimum bounds of the graph
+	* @param newValue a rectangle object
+	*/
     setMinBounds(newValue) { this.minBounds = newValue }
 
     /**
@@ -196,6 +206,10 @@ class Graph {
         }
     }
 
+	/**
+	* Sets the node prototypes for the graph
+	* @param n a node object
+	*/
     setNodePrototype(n){
         let duplicate = false
         for (let i = 0; i < this.nodePrototypes.length; i++){
@@ -203,6 +217,11 @@ class Graph {
         }
         if (duplicate === false)  this.nodePrototypes.push(n)
     }
+
+	/**
+	* Sets the edge prototypes for the graph
+	* @param e an edge object
+	*/
     setEdgePrototype(e){
         this.edgePrototypes.push(e)
         let duplicate = false
@@ -211,10 +230,19 @@ class Graph {
         }
         if (duplicate === false)  this.edgePrototypes.push(e)
     }
+
+	/**
+	* Returns an array of node prototypes for the graph
+	* @return an array of nodes
+	*/
     getNodePrototypes(){
         return this.nodePrototypes
     }
-
+	
+	/**
+	* Returns an array of edge prototypes for the graph
+	* @return an array of edges
+	*/
     getEdgePrototypes(){
         return this.edgePrototypes
     }

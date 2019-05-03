@@ -1,52 +1,119 @@
 'use strict'
+/*
+These are mostly all reconstructions of utility classes normally found in tha java api or utility
+functions that are necessary for providing "interface" functionality for the graph framework and handling
+some properties of the graph editor navigation
+*/
 
+/**
+* A rectangle class based on the java Rectangle2D class
+* @author Jeren Mckey
+*/
 class Rectangle {
+	/**
+	* Constructs a new Rectangle object
+	*/
 	constructor() {
 		this.x = 0
 		this.y = 0
 		this.width = 0
 		this.height = 0
 	}
+	
+	/**
+	* Sets the coordinates and size of the rectangle object
+	* @param x the x-coordinate for the rectangle
+	* @param y the y-coordinate for the rectangle
+	* @param width a number
+	* @param height a number
+	*/
 	setRect(x, y, width, height){
 		this.x = x
 		this.y = y
 		this.width = width
 		this.height = height
 	}
+	
+	/**
+	* Sets the coordinates for the rectangle object
+	* @param x the x-coordinate for the rectangle
+	* @param y the y-coordinate for the rectangle
+	*/
 	setLocation(x, y){
 		this.x = x
 		this.y = y
 	}
+	
+	/** 
+	* Sets the width for the rectangle
+	* @param width a number
+	*/
 	setWidth(width){
 		this.width = width
 	}
+	
+	/** 
+	* Sets the width for the rectangle
+	* @param height a number
+	*/
 	setHeight(height){
 		this.height = height
 	}
+	
+	/** 
+	* Returns the width for the rectangle
+	* @return a number
+	*/
 	getWidth(){
 		return this.width
 	}
-	getHeight(){
-		return this.height
-	}
-	getX(){
-		return this.x
-	}
-	getY(){
-		return this.y
-	}	
-	getMinX(){
-		return this.x
-	}
-	getMinY(){
-		return this.y
-	}
-	getMaxX(){
-		return this.x + this.width
-	}
-	getMaxY(){
-		return this.y + this.height
-	}
+	
+	/** 
+	* Returns the height for the rectangle
+	* @return a number
+	*/
+	getHeight(){ return this.height }
+	
+	/** 
+	* Returns the x-coordinate
+	* @return a number
+	*/		
+	getX(){ return this.x }
+	
+	/** 
+	* Returns the y-coordinate
+	* @return a number
+	*/	
+	getY(){ return this.y }
+
+	/** 
+	* Returns the minimum x-coordinate of the entire rectangle
+	* @return a number
+	*/		
+	getMinX(){ return this.x}
+	
+	/** 
+	* Returns the minimum y-coordinate of the entire rectangle
+	* @return a number
+	*/		
+	getMinY(){ return this.y }
+	
+	/** 
+	* Returns the maximum x-coordinate of the entire rectangle
+	* @return a number
+	*/		
+	getMaxX(){ return this.x + this.width }
+	
+	/** 
+	* Returns the maximum y-coordinate of the entire rectangle
+	* @return a number
+	*/		
+	getMaxY(){ return this.y + this.height }
+	
+	/** 
+	* Resets the attributes of this rectangle to be the union of this and another rectangle
+	* @param the other rectangle object
+	*/		
 	add(r){
 		let x1 = Math.min(this.x, r.getMinX())
 		let x2 = Math.max(this.x + this.width, r.getMaxX())
@@ -54,62 +121,162 @@ class Rectangle {
 		let y2 = Math.max(this.y + this.height, r.getMaxY())
 		this.setRect(x1, y1, x2 - x1, y2 - y1);
 	}
+	
+	/** 
+	* Returns the center x-coordinate of the entire rectangle
+	* @return a number
+	*/		
 	getCenterX(){ return this.x + (this.width / 2) }
+	
+	/** 
+	* Returns the center y-coordinate of the entire rectangle
+	* @return a number
+	*/		
 	getCenterY(){ return this.y + (this.height / 2) }
 }
 
+/**
+* A point class based on the java Point2D class
+* @author Jeren Mckey
+*/
 class Point {
+	/**
+	* Constructs a new Point object
+	*/
 	constructor() {
 		this.x = 0
 		this.y = 0
 	}
 	
+	/**
+	* Sets the coordinates for the point object
+	* @param x the x-coordinate for the point
+	* @param y the y-coordinate for the point
+	*/
 	setPoint(x, y){
 		this.x = x
 		this.y = y
 	}
+	
+	/** 
+	* Returns the x-coordinate of the point
+	* @return a number
+	*/
 	getX(){
 		return this.x
 	}
+	
+	/** 
+	* Returns the y-coordinate of the point
+	* @return a number
+	*/
 	getY(){
 		return this.y
 	}
 }
 
+/**
+* A line class based on the java Line2D class
+* @author Jeren Mckey
+*/
 class Line {
+	/**
+	* Constructs a new Line object
+	*/
 	constructor() {
 		this.point1 = new Point()
 		this.point2 = new Point()
 	}
 	
+	/**
+	* Sets the coordinates for the line object
+	* @param p1 the first point
+	* @param p2 the second point
+	*/
 	setPoints(p1, p2){
 		this.point1 = p1
 		this.point2 = p2
 	}
+	
+	/** 
+	* Returns point1 of the line
+	* @return a point object
+	*/
 	getPoint1(){
 		return this.point1
 	}
+	
+	/** 
+	* Returns point2 of the line
+	* @return a point object
+	*/
 	getPoint2(){
 		return this.point2
 	}
+	
+	/** 
+	* Returns the x1-coordinate of the line
+	* @return a number
+	*/
 	getX1(){
 		return this.point1.getX()
 	}
+	
+	/** 
+	* Returns the y1-coordinate of the line
+	* @return a number
+	*/
 	getY1(){
 		return this.point1.getY()
 	}
+	
+	/** 
+	* Returns the x2-coordinate of the line
+	* @return a number
+	*/
 	getX2(){
 		return this.point2.getX()
 	}
+	
+	/** 
+	* Returns the y2-coordinate of the line
+	* @return a number
+	*/
 	getY2(){
 		return this.point2.getY()
 	}
+	
+	/**
+	* Returns the distance from a point to a line segment. The distance measured is the 
+	* distance between the specified point and the closest point between the specified end points. 
+	* If the specified point intersects the line segment in between the end points, this method returns 0.0.
+	* @param x1 the x1-coordinate of the line
+	* @param y1 the y1-coordinate of the line
+	* @param x2 the x2-coordinate of the line 
+	* @param y2 the x2-coordinate of the line
+	* @param px the x-coordinate of the point
+	* @param py the y-coordinate of the point
+	* @return a number representing the distance
+	*/
 	ptSegDist(x1, y1, x2, y2, px, py) 
 	{
         let num = Math.sqrt(this.ptSegDistSq(x1, y1, x2, y2, px, py))
 		console.log(num)
 		return num
 	}
+	
+	/**
+	* Returns the square of the distance from a point to a line segment. The distance measured is the 
+	* distance between the specified point and the closest point between the specified end points. 
+	* If the specified point intersects the line segment in between the end points, this method returns 0.0.
+	* @param x1 the x1-coordinate of the line
+	* @param y1 the y1-coordinate of the line
+	* @param x2 the x2-coordinate of the line 
+	* @param y2 the x2-coordinate of the line
+	* @param px the x-coordinate of the point
+	* @param py the y-coordinate of the point
+	* @return a number representing the square of the distance
+	*/
 	ptSegDistSq(x1, y1, x2, y2, px, py) 
 	{
         // Adjust vectors relative to x1,y1
@@ -161,211 +328,65 @@ class Line {
 
 }
 
+/**
+* An ellipse class based on the java Ellipse2D class
+* @author Jeren Mckey
+*/
 class Ellipse {
+	/**
+	* Constructs a new Ellipse object
+	*/
 	constructor() {
 		this.center = new Point()
 		this.width = 0
 		this.height = 0
 	}
 	
-	setCenter(x, y){
-		this.center.setPoint(x, y)
-	}
-	setWidth(width){
-		this.width = width
-	}
-	setHeight(height){
-		this.height = height
-	}
-	getCenter(){
-		return this.center
-	}
-	getWidth(){
-		return this.width
-	}
+	/**
+	* Sets the center point of the ellipse object
+	* @param x the x-coordinate of the point
+	* @param y the y-cooridnate of the pont
+	*/
+	setCenter(x, y){ this.center.setPoint(x, y) }
+	
+	/**
+	* Sets the width of the ellipse object
+	* @param width a number
+	*/
+	setWidth(width){ this.width = width }
+	
+	/**
+	* Sets the height of the ellipse object
+	* @param height a number
+	*/
+	setHeight(height){ this.height = height }
+	
+	/**
+	* Returns the center of the ellipse object
+	* @return a point object
+	*/
+	getCenter(){ return this.center }
+	
+	/**
+	* Returns the width of the ellipse object
+	* @return a number
+	*/
+	getWidth(){ return this.width }
+	
+	/**
+	* Returns the height of the ellipse object
+	* @return a number
+	*/
 	getHeight(){
 		return this.height
 	}
 }
 
-
 /**
-   A grid to which points and rectangles can be "snapped". The
-   snapping operation moves a point to the nearest grid point.
-*/
-class Grid
-{
-   /**
-      Constructs a grid with no grid points.
-   */
-   constructor()
-   {
-      this.gridx = 0
-	  this.gridy = 0
-   }
-   
-   /**
-      Sets the grid point distances in x- and y-direction
-      @param x the grid point distance in x-direction
-      @param y the grid point distance in y-direction
-   */
-   setGrid(x, y)
-   {
-      this.gridx = x
-      this.gridy = y
-   }
-   
-   /**
-      Draws this grid inside a rectangle.
-      @param g2 the graphics context
-      @param bounds the bounding rectangle
-   */
-   draw(bounds)
-   {
-	  const panel = document.getElementById('graphpanel')
-	  const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line')
-	  const line2 = document.createElementNS('http://www.w3.ord/2000/svg', 'line')
-      let pale_blue = 'lightcyan'
-	  
-      for (let x = bounds.getX(); x < bounds.getMaxX(); x += this.gridx)
-	     line1.setAttribute('x1', x)
-		 line1.setAttribute('y1', bounds.getY())
-		 line1.setAttribute('x2', x)
-		 line1.setAttribute('y2', bounds.getMaxY())
-		 line1.setAttribute('fill', pale_blue)
-		 panel.appendChild(line)
-      for (let y = bounds.getY(); y < bounds.getMaxY(); y += this.gridy)
-		 line2.setAttribute('x1', bounds.getX())
-		 line2.setAttribute('y1', y)
-		 line2.setAttribute('x2', bounds.getMaxX())
-		 line2.setAttribute('y2', y)
-		 line2.setAttribute('fill', pale_blue)
-		 line.appendChild(line2)
-   }
-
-   /**
-      Snaps a point to the nearest grid point
-      @param p the point to snap. After the call, the 
-      coordinates of p are changed so that p falls on the grid.
-   */
-   snap(p)
-   {
-      let x = 0
-      if (this.gridx === 0)
-         x = p.getX()
-      else
-         x = Math.round(p.getX() / this.gridx) * this.gridx
-      let y = 0
-      if (this.gridy === 0)
-         y = p.getY()
-      else
-         y = Math.round(p.getY() / this.gridy) * this.gridy
-         
-      p.setLocation(x, y)
-   }
-
-   /**
-      Snaps a rectangle to the nearest grid points
-      @param r the rectangle to snap. After the call, the 
-      coordinates of r are changed so that all of its corners
-      falls on the grid.
-   */
-   snap(r)
-   {
-      let x = 0
-      let w = 0
-      if (this.gridx === 0)
-      {
-         x = r.getX()
-         w = r.getWidth()
-      }
-      else
-      {
-         x = Math.round(r.getX() / this.gridx) * this.gridx
-         w = Math.ceil(r.getWidth() / (2 * this.gridx)) * (2 * this.gridx)
-      }
-      let y = 0
-      let h = 0
-      if (this.gridy === 0)
-      {
-         y = r.getY()
-         h = r.getHeight()
-      }
-      else
-      {
-         y = Math.round(r.getY() / this.gridy) * this.gridy
-         h = Math.ceil(r.getHeight() / (2 * this.gridy)) * (2 * this.gridy)
-      }
-         
-      r.setRect(x, y, w, h);     
-   }
-}
-
-class Direction{
-	   /**
-		  Constructs a direction between two points
-		  @param p the starting point
-		  @param q the ending point
-	   */
-	   constructor(p, q)
-	   {
-		   this.x = 0
-		   this.y = 0
-		   setDirection(q.getX() - p.getX(),
-			 q.getY() - p.getY())
-	   }
-		/**
-		  Constructs a direction (normalized to length 1).
-		  @param dx the x-value of the direction
-		  @param dy the corresponding y-value of the direction
-	   */
-	   setDirection(dx, dy)
-	   {
-		  this.x = dx;
-		  this.y = dy;
-		  let length = Math.sqrt(this.x * this.x + this.y * this.y)
-		  if (length === 0) return
-		  this.x = this.x / length
-		  this.y = this.y / length
-	   }
-	   /**
-		  Turns this direction by an angle.
-		  @param angle the angle in degrees
-	   */
-	   turn(angle)
-	   {
-		  let a = angle
-		  return new Direction(
-			 this.x * Math.cos(a) - this.y * Math.sin(a),
-			 this.x * Math.sin(a) + this.y * Math.cos(a))
-	   }
-
-	   /**
-		  Gets the x-component of this direction
-		  @return the x-component (between -1 and 1)
-	   */
-	   getX()
-	   {
-		  return this.x
-	   }
-
-	   /**
-		  Gets the y-component of this direction
-		  @return the y-component (between -1 and 1)
-	   */
-	   getY()
-	   {
-		  return this.y
-	   }
-
-	   static getNorth(){ return new Direction(0, -1) }
-	   static getSouth() { return new Direction(0, 1) }
-	   static getEast() { return new Direction(1, 0) }
-	   static getWest() { return new Direction(-1, 0) }
-	}
-
-
-
+* Function to test if some object can be considered an "Edge" object
+* @param someObject an object to test
+* @return a boolean value
+*/ 
 function isEdge(someObject){
 	function can(obj, methodName){
 		return ((typeof obj[methodName]) === "function")
@@ -403,10 +424,18 @@ function isEdge(someObject){
 	if (can(someObject, "getIconWidth")){
 		edgeCounter++
 	}
-	if (edgeCounter === 10) edge = true
+	if (can(someObject, "getConnectionPoints")){
+		edgeCounter++
+	}
+	if (edgeCounter === 11) edge = true
 	return edge	
 }
 
+/**
+* Function to test if some object can be considered a "Node" object
+* @param someObject an object to test
+* @return a boolean value
+*/ 
 function isNode(someObject){
 	function can(obj, methodName)
 	{
@@ -458,6 +487,10 @@ function isNode(someObject){
 	return node	
 }
 
+/**
+* Function to handle navbar click events
+* @param the click event
+*/ 
 function dropdownClick(event){
   if (event.target.id === "filecontent"){
 	  var x = document.getElementById("filedropdown")

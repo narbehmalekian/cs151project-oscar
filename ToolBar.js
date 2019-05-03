@@ -1,7 +1,15 @@
 'use strict'
 
+/**
+   A toolbar class consisting of selectable tool buttons (nodes and edges)
+   @author Jeren Mckey
+*/
 class ToolBar{
 
+	/**
+	* Constructs a new toolbar object based on some graph
+	* @param graph the graph used for construction
+	*/
     constructor(graph) {
         this.tools = []
 		this.prototypes = graph.getNodePrototypes()
@@ -9,15 +17,19 @@ class ToolBar{
 		this.currentTool = undefined
 	}
 
+	/**
+	* Returns the currently selected tool from this toolbar object
+	* @return the node or edge object or null for the grabber
+	*/
     getSelectedTool()
     {
 		return this.currentTool
     }
 
 	/**
-		This method adds all of the prototypes to the toolbar at once. 
-		Must be called only once from graphframe.
-	**/
+	*  This method adds the icons from all of the prototypes to the toolbar at once. 
+	*  Must be called only once from graphframe.
+	*/
    add()
    {
 	    const div = document.getElementById('toolbar')
@@ -78,6 +90,9 @@ class ToolBar{
 		}
    }
 
+   /**
+   * Utility class for drawing the grabber icon on the toolbar
+   */
    drawGrabber(x,y, svg){
         const SIZE = 8
         let rect = new Rectangle()

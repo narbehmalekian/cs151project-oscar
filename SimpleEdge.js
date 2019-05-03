@@ -1,6 +1,10 @@
 'use strict'
 
-class ObjectReferenceEdge
+/**
+* A simple edge class
+* @author Narbeh Malekian
+*/
+class SimpleEdge
 {
     constructor(s, e){
         this.start = s
@@ -83,8 +87,8 @@ class ObjectReferenceEdge
 
 
     clone(){
-        let clone = new ObjectReferenceEdge();
-        return clone;
+        let clone = new SimpleEdge()
+        return clone
     }
 
     getIconWidth(){

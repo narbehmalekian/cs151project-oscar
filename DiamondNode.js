@@ -1,7 +1,13 @@
 'use strict'
-
+/**
+* A diamond-shaped graph node
+* @author Jeren Mckey
+*/
 class DiamondNode {
     
+	/**
+	* Constructs a new Diamond Node
+	*/
     constructor() { 
 		this.x = 0
 		this.y = 0
@@ -10,12 +16,20 @@ class DiamondNode {
 		this.size = 40
 	}
     
+	/**
+	* Gets the bounding rectangle for the Diamond Node shape
+	* @return a rectangle object
+	*/
     getBounds(){
         let rect = new Rectangle()
 		rect.setRect(this.x, this.y, this.size, this.size)
 		return rect
     }
     
+	/**
+	* Creates a new Diamond Node object and returns that new object
+	* @return a DiamondNode object
+	*/
 	clone() { 
 	 let clone = new DiamondNode
 	 return clone
@@ -38,6 +52,11 @@ class DiamondNode {
       return s < 0
    }
 
+   /**
+	* Returns true if a point is inside the Diamond Node object
+	* @param aPoint a point object
+	* @return a boolean value
+	*/
    contains(aPoint)
    {
       let top = new Point()
@@ -55,11 +74,19 @@ class DiamondNode {
          && this.toRightOf(left, top, aPoint)
    }
     
+	/**
+	* Translates the location of the shape
+	* @param dx the change in x
+	* @param dy the change in y
+	*/
     translate(dx, dy) {
       this.x += dx
       this.y += dy
     }
     
+	/**
+	* Draws the Diamond Node on the graph panel context
+	*/
     draw(){
       const panel = document.getElementById('graphpanel')
       const diamond = document.createElementNS('http://www.w3.org/2000/svg', 'polygon')
@@ -73,6 +100,10 @@ class DiamondNode {
       panel.appendChild(diamond)
     }
     
+	/**
+	* Returns the connection point from this Diamond Node to another ndoe
+	* @param other the other node
+	*/
 	getConnectionPoint(other){
 	  let centerX = this.x + this.size / 2
       let centerY = this.y + this.size / 2
@@ -96,6 +127,10 @@ class DiamondNode {
 	  return newPoint
 	}
 	
+	/**
+	* Returns a graphic of the Diamond Node object
+	* @return an SVG element
+	*/
 	drawIcon()
 	{
 		let size = this.size / 2
@@ -112,10 +147,18 @@ class DiamondNode {
 		return diamond
 	}
 	
+	/**
+	* Returns the height of the Diamond Node graphic
+	* @return a number
+	*/
 	getIconHeight(){
 		 return this.iconHeight
 	}
 	
+	/**
+	* Returns the width of the Diamond Node graphic
+	* @return a number
+	*/
 	getIconWidth(){ return this.iconWidth }
 	
 
@@ -125,7 +168,7 @@ class DiamondNode {
       @param p the point at which the node is being added
       @return true if this node accepts the given node as a child
    */
-    addNode(n, p) { return false; } 
+    addNode(n, p) { return false } 
 
 
    /**
@@ -135,6 +178,11 @@ class DiamondNode {
    */
    removeNode(g, n) { }
    
+   /**
+      Notifies this node that a edge is being removed.
+      @param g the ambient graph
+      @param e the edge to be removed
+   */
    removeEdge(g, e) { }
    
    /**
@@ -149,6 +197,6 @@ class DiamondNode {
 		if (e.getEnd() !== undefined){
 			return true
 		}
-		else return false;
+		else return false
    }
  }
