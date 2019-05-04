@@ -11,7 +11,8 @@ class ObjectNode{
         this.y = 50;
         this.children = [];
         this.edges = [];
-        this.color = '#ffffff';
+        this.color = '#ff0000';
+        this.name = 'Name me!';
     }
 
     draw(){
@@ -129,6 +130,14 @@ class ObjectNode{
 
     removeEdge(){
 
+    }
+    
+    setColor(c){
+        this.color = c;
+    }
+    
+    getColor(){
+        return this.color;
     }
 
     setName(n){

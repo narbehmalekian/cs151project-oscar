@@ -167,24 +167,29 @@ document.addEventListener('DOMContentLoaded', function () {
     * @param the object that was selected
     */
     function setProperties(){
-        var type = document.getElementById('type')
-        var name = document.getElementById('name')
-        var color = document.getElementById('color')
-        if(selected.constructor === undefined){
+        let type = document.getElementById('type')
+        let name = document.getElementById('name')
+        let color = document.getElementById('color')
+        if(selected === undefined){
             type.innerHTML = "- none -"
-            color.setAttribute('value','#ffffff')
+            color.value = '#ffffff'
         }
         else{
             type.innerHTML = selected.constructor.name
-            color.setAttribute('value',selected.color)
+            name.value = selected.getName()
+            color.value = selected.getColor()
+            console.log(selected.getColor())
         }
     }
 
     function applyProperties(){
-        var name = document.getElementById('name')
-        var color = document.getElementById('color')
-        if(selected.name !== undefined) selected.name = name
-        if(selected.color !== undefined) selected.color = color
+        if(lastSelected !== undefined){
+            let name = document.getElementById('name').value
+            let color = document.getElementById('color').value
+            if(lastSelected.getName() !== undefined) lastSelected.setName(name)
+            if(lastSelected.getColor() !== undefined) lastSelected.setColor(color)
+            repaint()
+        }
     }
 
     /**
@@ -203,6 +208,10 @@ document.addEventListener('DOMContentLoaded', function () {
         selected = undefined
         repaint()
     }
+    
+    document.getElementById('properties').addEventListener('change', event => {
+        applyProperties()
+    })
 
     //Event listener for panel click functionality (selecting and creating new nodes/edges)
     panel.addEventListener('mousedown', event => {
