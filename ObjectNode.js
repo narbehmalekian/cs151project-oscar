@@ -11,6 +11,7 @@ class ObjectNode{
         this.y = 50;
         this.children = [];
         this.edges = [];
+        this.color = '#ffffff';
     }
 
     draw(){
@@ -22,7 +23,7 @@ class ObjectNode{
         rect.setAttribute('width', this.width);
         rect.setAttribute('stroke-width', '3');
         rect.setAttribute('stroke','black');
-        rect.setAttribute('fill','white');
+        rect.setAttribute('fill',this.color);
         panel.appendChild(rect);
     }
 

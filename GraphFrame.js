@@ -61,33 +61,33 @@ function download(filename, graphSave) {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-	// Instantiating graphs and buttons to the toolbar
+    // Instantiating graphs and buttons to the toolbar
     const simpleGraph = new Graph()
     const objectGraph = new Graph()
     simpleGraph.setNodePrototype(new CircleNode())
-	simpleGraph.setNodePrototype(new DiamondNode())
-	simpleGraph.setEdgePrototype(new SimpleEdge())
-	simpleGraph.setEdgePrototype(new HVEdge())
-	simpleGraph.setEdgePrototype(new VHEdge())
+    simpleGraph.setNodePrototype(new DiamondNode())
+    simpleGraph.setEdgePrototype(new SimpleEdge())
+    simpleGraph.setEdgePrototype(new HVEdge())
+    simpleGraph.setEdgePrototype(new VHEdge())
     let graph = simpleGraph
     objectGraph.setNodePrototype(new ObjectNode())
     objectGraph.setEdgePrototype(new SimpleEdge())
-	
-	// Instantiaing new toolbars based on different graphs
+
+    // Instantiaing new toolbars based on different graphs
     const simpleToolBar = new ToolBar(simpleGraph)
     const objectToolBar = new ToolBar(objectGraph)
     let toolBar = simpleToolBar
     toolBar.add()
     graph.draw()
-	
-	//Adding graph types to the nav bar
+
+    //Adding graph types to the nav bar
     addGraphType(simpleGraph, 'Simple Graph', simpleToolBar)
     addGraphType(objectGraph, 'Object Diagram', objectToolBar)
     let lastSelected = undefined
     let mouseDownPoint = undefined
     let lastMousePoint = undefined
 
-	//Get the graphpanel context 
+    //Get the graphpanel context 
     const panel = document.getElementById('graphpanel')
     const deleteButton = document.getElementById('delete')
     const saveButton = document.getElementById('save')
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let dragStartBounds = undefined
     let rubberBandStart = undefined
 
-	/**
+    /**
 	* Adds a functioning graph type button to the nav bar
 	* @param graphType the type of graph
 	* @param title the title of the graphType
@@ -163,6 +163,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
+    * Sets the details of the selected object to display in the properties table
+    * @param the object that was selected
+    */
+    function setProperties(){
+        var type = document.getElementById('type')
+        var name = document.getElementById('name')
+        var color = document.getElementById('color')
+        if(selected.constructor === undefined){
+            type.innerHTML = "- none -"
+            color.setAttribute('value','#ffffff')
+        }
+        else{
+            type.innerHTML = selected.constructor.name
+            color.setAttribute('value',selected.color)
+        }
+    }
+
+    function applyProperties(){
+        var name = document.getElementById('name')
+        var color = document.getElementById('color')
+        if(selected.name !== undefined) selected.name = name
+        if(selected.color !== undefined) selected.color = color
+    }
+
+    /**
 	* Removes the selected object, a node or an edge
 	* @param the object to be removed
 	*/
@@ -201,6 +226,7 @@ document.addEventListener('DOMContentLoaded', function () {
             {
                 selected = undefined
             }
+            setProperties()
         }
         else if (isNode(tool))
         {
@@ -280,14 +306,14 @@ document.addEventListener('DOMContentLoaded', function () {
         menuFunct = true
     })
 
-	//Listener for button press to download the svg graphic to the user's computer
+    //Listener for button press to download the svg graphic to the user's computer
     document.getElementById("dwn-btn").addEventListener("click", function(){
         let textEntry = document.getElementById("text-val").value
 
         download(textEntry, document.getElementById('graphpanel'))
     })
 
-	//Listener for handling auto closing for the nav bar dropdowns
+    //Listener for handling auto closing for the nav bar dropdowns
     document.addEventListener('mousedown', event => {
         let x = document.getElementById('editdropdown')
         let y = document.getElementById('filedropdown')
