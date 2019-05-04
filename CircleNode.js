@@ -11,6 +11,7 @@ class CircleNode {
 		this.iconHeight = 0
 		this.iconWidth = 0
 		this.size = 40
+        this.color = '#DAA520'
 	}
     
 	/**
@@ -60,7 +61,7 @@ class CircleNode {
       circle.setAttribute('cx', this.x + this.size / 2)
       circle.setAttribute('cy', this.y + this.size / 2)
       circle.setAttribute('r', this.size / 2)
-      circle.setAttribute('fill', 'goldenrod')
+      circle.setAttribute('fill', this.color)
       panel.appendChild(circle)
     }
     
@@ -97,9 +98,17 @@ class CircleNode {
 		circle.setAttribute('cx', this.x + size / 2)
 		circle.setAttribute('cy', this.y + size / 2)
 		circle.setAttribute('r', size / 2)
-		circle.setAttribute('fill', 'goldenrod')
+		circle.setAttribute('fill', this.color)
 		return circle
 	}
+    
+    getColor(){
+        return this.color
+    }
+    
+    setColor(c){
+        this.color = c
+    }
 	
 	/**
 	* Returns the height of the Circle Node graphic

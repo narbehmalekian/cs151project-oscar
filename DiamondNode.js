@@ -14,6 +14,7 @@ class DiamondNode {
 		this.iconHeight = 0
 		this.iconWidth = 0
 		this.size = 40
+        this.color = '#0000FF'
 	}
     
 	/**
@@ -96,7 +97,7 @@ class DiamondNode {
 	  let yLong = this.y + this.size
 	  let str = String(xMid) + ' ' + String(this.y) + ', ' + String(xLong) + ' ' + String(yMid) + ', ' + String(xMid) + ' ' + String(yLong) + ', ' + String(this.x) + ' ' + String(yMid)
 	  diamond.setAttribute('points', str) 
-	  diamond.setAttribute('fill', 'blue')
+	  diamond.setAttribute('fill', this.color)
       panel.appendChild(diamond)
     }
     
@@ -143,9 +144,17 @@ class DiamondNode {
 		let yLong = this.y + size
 		let str = String(xMid) + ' ' + String(this.y) + ', ' + String(xLong) + ' ' + String(yMid) + ', ' + String(xMid) + ' ' + String(yLong) + ', ' + String(this.x) + ' ' + String(yMid)
 	    diamond.setAttribute('points', str) 
-		diamond.setAttribute('fill', 'blue')
+		diamond.setAttribute('fill', this.color)
 		return diamond
 	}
+    
+    getColor(){
+        return this.color
+    }
+    
+    setColor(c){
+        this.color = c
+    }
 	
 	/**
 	* Returns the height of the Diamond Node graphic

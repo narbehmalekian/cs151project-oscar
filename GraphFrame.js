@@ -171,22 +171,26 @@ document.addEventListener('DOMContentLoaded', function () {
         let name = document.getElementById('name')
         let color = document.getElementById('color')
         if(selected === undefined){
-            type.innerHTML = "- none -"
+            type.innerHTML = '- none -'
+            name.value = ''
             color.value = '#ffffff'
         }
         else{
+            if(selected instanceof ObjectNode){
+                name.value = selected.getName()
+            }
             type.innerHTML = selected.constructor.name
-            name.value = selected.getName()
             color.value = selected.getColor()
-            console.log(selected.getColor())
         }
     }
 
     function applyProperties(){
         if(lastSelected !== undefined){
-            let name = document.getElementById('name').value
+            if(lastSelected instanceof ObjectNode){
+                let name = document.getElementById('name').value
+                if(lastSelected.getName() !== undefined) lastSelected.setName(name)
+            }
             let color = document.getElementById('color').value
-            if(lastSelected.getName() !== undefined) lastSelected.setName(name)
             if(lastSelected.getColor() !== undefined) lastSelected.setColor(color)
             repaint()
         }
@@ -208,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
         selected = undefined
         repaint()
     }
-    
+
     document.getElementById('properties').addEventListener('change', event => {
         applyProperties()
     })
