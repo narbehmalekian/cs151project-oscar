@@ -180,10 +180,10 @@ document.addEventListener('DOMContentLoaded', function () {
         else{
             if(selected instanceof ObjectNode){
                 name.value = selected.getName()
+                name.value = selected.getName()
+                methods.value = selected.getMethods()
             }
             type.innerHTML = selected.constructor.name
-            name.value = selected.getName()
-            methods.value = selected.getMethods()
             color.value = selected.getColor()
         }
     }

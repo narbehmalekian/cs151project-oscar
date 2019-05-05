@@ -27,8 +27,6 @@ class Graph {
    */
     connect(e, p1, p2)
     {
-        console.log(p1.getX()+", "+p1.getY());
-        console.log(p2.getX()+", "+p2.getY());
         let n1 = this.findNode(p1)
         let n2 = this.findNode(p2)
         if (n1 !== undefined && n2 !== undefined)
@@ -38,7 +36,6 @@ class Graph {
             {
                 n2.addEdge(e)
                 this.edges.push(e)
-                console.log(this.edges[0])
                 return true
             }
         }

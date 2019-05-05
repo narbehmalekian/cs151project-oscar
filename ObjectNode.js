@@ -41,7 +41,6 @@ class ObjectNode{
         title.innerHTML = this.name;
         panel.appendChild(title);
         let largest = title.getBoundingClientRect().width;
-        console.log('title: '+title.getBoundingClientRect().width)
 
         const body = document.createElementNS('http://www.w3.org/2000/svg','text');
         panel.appendChild(body);
@@ -57,15 +56,14 @@ class ObjectNode{
             row.innerHTML = rows[i];
             body.appendChild(row);
             largest = Math.max(largest,row.getBoundingClientRect().width);
-            console.log('row: '+row.getBoundingClientRect().width);
         }
-        console.log('largest: '+largest);
-        if(Math.abs(largest+20-this.width)>1){
+        if(Math.abs(largest+20-this.width)>5){ //if width is not matching the text resize
             this.width = largest+20;
             panel.removeChild(rect);
             panel.removeChild(title);
             panel.removeChild(body);
             this.draw();
+            console.log('Resizing ObjectNode');
         }
     }
 
