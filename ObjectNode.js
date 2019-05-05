@@ -1,3 +1,7 @@
+/**
+* Author: Narbeh Malekian
+*/
+
 'use strict';
 
 class ObjectNode{ 
