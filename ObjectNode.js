@@ -6,6 +6,9 @@
 
 class ObjectNode{ 
 
+    /**
+    * Constructs a new object node 
+    */
     constructor(){
         this.height = 50;
         this.width = 100;
@@ -19,6 +22,9 @@ class ObjectNode{
         this.name = 'Name me!';
         this.methods = '';
     }
+    /**
+    * Draws the object node on the graph panel context
+    */
 
     draw(){
         const panel = document.getElementById('graphpanel');
@@ -66,27 +72,45 @@ class ObjectNode{
             console.log('Resizing ObjectNode');
         }
     }
+    /** 
+    *Translates the location of the shape
+    *@param dx the change in x
+    *@param dy the change in y
+    */ 
 
     translate(dx, dy) {
         this.x += dx;
         this.y += dy;
     }
-
+    /**
+    *Returns true if a point inside Object Node 
+    *@param p a point object
+    *@return a boolean value
+    */
     contains(p){
         return p.getX()>this.x && p.getX()<(this.x+this.width) && p.getY()>this.y && p.getY()<(this.y+this.height);
     }
 
+    /**
+    * Gets the bounding rectangle for the Object Node shape
+    @return rectangle node
+    */ 
     getBounds(){
         let rect = new Rectangle()
         rect.setRect(this.x, this.y, this.width, this.height);
         return rect
     }
-
+    /**
+    * Creates a new Object Node object and returns the new object
+    */
     clone(){
         let clone = new ObjectNode();
         return clone;
     }
-
+    /** 
+    *Returns the connection point from this object node to another node
+    *@param other the other node
+    */
     getConnectionPoint(other){
         let dx = other.x - this.x;
         let dy = other.y - this.y;
@@ -115,6 +139,10 @@ class ObjectNode{
             }
         }
     }
+    /**
+    *Returns a graphic of the Object node object
+    *@return an SVG element
+    */
 
     drawIcon(){
         this.iconWidth = this.width;
@@ -131,14 +159,26 @@ class ObjectNode{
         panel.appendChild(rect);
         return rect;
     }
-
+    /**
+    *Returns the height of Object Node graphic
+    *@return a number
+    */
     getIconHeight(){
         return 20;
     }
-
+    /**
+    *Returns the width of Object Node graphic
+    *@return a number
+    */
     getIconWidth(){
         return 20;
     }
+    /**
+    * Adds a node as a child node to this node
+    * @param node the child node
+    * @param p the point at which the node is being added
+    * @return true if this node accepts the given node as a child
+   */
 
     addNode(node,p){ // not doing anything with p right now
         for(var i = 0; i<this.children.length; i++){
@@ -149,7 +189,14 @@ class ObjectNode{
         this.children.push(node);
         return true;
     }
-
+    /**
+    * Adds an edge that originates at this node
+    * @param p the point that the user selected as
+    * the starting point. This may be used as a hint if 
+    * edges are ordered.
+    * @param e the edge to add
+    * @return true if the edge was added
+   */
     addEdge(e){
         if(e !== undefined){
 
@@ -158,7 +205,11 @@ class ObjectNode{
         }
         return false
     }
-
+    /**
+    *Notifies this node that a node is being removed.
+    *@param g the ambient graph
+    *@param n the node to be removed
+   */
     removeNode(node){
         for(var i = 0; i<this.children.length; i++){
             if(this.children[i]===node){
@@ -166,6 +217,11 @@ class ObjectNode{
             }
         }
     }
+    /**
+    *Notifies this node that an edge is being removed.
+    *@param g the ambient graph
+    *@param e the edge to be removed
+   */
 
     removeEdge(g,e){
 
