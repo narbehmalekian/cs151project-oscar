@@ -170,9 +170,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let type = document.getElementById('type')
         let name = document.getElementById('name')
         let color = document.getElementById('color')
+        let methods = document.getElementById('methods')
         if(selected === undefined){
             type.innerHTML = '- none -'
             name.value = ''
+            methods.value = ''
             color.value = '#ffffff'
         }
         else{
@@ -180,6 +182,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 name.value = selected.getName()
             }
             type.innerHTML = selected.constructor.name
+            name.value = selected.getName()
+            methods.value = selected.getMethods()
             color.value = selected.getColor()
         }
     }
@@ -188,7 +192,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if(lastSelected !== undefined){
             if(lastSelected instanceof ObjectNode){
                 let name = document.getElementById('name').value
+                let methods = document.getElementById('methods').value
                 if(lastSelected.getName() !== undefined) lastSelected.setName(name)
+                if(lastSelected.getMethods() !== undefined) lastSelected.setMethods(methods)
             }
             let color = document.getElementById('color').value
             if(lastSelected.getColor() !== undefined) lastSelected.setColor(color)
@@ -221,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function () {
     panel.addEventListener('mousedown', event => {
         let mousePoint = mouseLocation(event)
         let n = graph.findNode(mousePoint) 
-        let e = graph.findEdge(mousePoint);
+        let e = graph.findEdge(mousePoint)
         let tool = toolBar.getSelectedTool()
         if (tool === undefined) // select
         {

@@ -3,7 +3,7 @@
 class ObjectNode{ 
 
     constructor(){
-        this.height = 150;
+        this.height = 50;
         this.width = 100;
         this.iconHeight = 20;
         this.iconWidth = 20;
@@ -11,8 +11,9 @@ class ObjectNode{
         this.y = 50;
         this.children = [];
         this.edges = [];
-        this.color = '#ff0000';
+        this.color = '#ffffbb';
         this.name = 'Name me!';
+        this.methods = '';
     }
 
     draw(){
@@ -26,6 +27,42 @@ class ObjectNode{
         rect.setAttribute('stroke','black');
         rect.setAttribute('fill',this.color);
         panel.appendChild(rect);
+
+        const title = document.createElementNS('http://www.w3.org/2000/svg','text');
+        title.setAttribute('x',this.x+this.width/2);
+        title.setAttribute('y',this.y+20);
+        title.setAttribute('fill','black');
+        title.setAttribute('font-size','20px');
+        title.setAttribute('text-anchor','middle');
+        title.innerHTML = this.name;
+        panel.appendChild(title);
+        let largest = title.getBoundingClientRect().width;
+        console.log('title: '+title.getBoundingClientRect().width)
+
+        const body = document.createElementNS('http://www.w3.org/2000/svg','text');
+        panel.appendChild(body);
+        
+        let rows = this.methods.split(/\n|\r/);
+        for(let i=0; i<rows.length; i++){
+            let row = document.createElementNS('http://www.w3.org/2000/svg','tspan');
+            row.setAttribute('x',this.x+this.width/2);
+            row.setAttribute('y',this.y+50+i*18);
+            row.setAttribute('fill','black');
+            row.setAttribute('font-size','16px');
+            row.setAttribute('text-anchor','middle');
+            row.innerHTML = rows[i];
+            body.appendChild(row);
+            largest = Math.max(largest,row.getBoundingClientRect().width);
+            console.log('row: '+row.getBoundingClientRect().width);
+        }
+        console.log('largest: '+largest);
+        if(Math.abs(largest+20-this.width)>1){
+            this.width = largest+20;
+            panel.removeChild(rect);
+            panel.removeChild(title);
+            panel.removeChild(body);
+            this.draw();
+        }
     }
 
     translate(dx, dy) {
@@ -128,23 +165,37 @@ class ObjectNode{
         }
     }
 
-    removeEdge(){
+    removeEdge(g,e){
 
     }
-    
+
     setColor(c){
         this.color = c;
     }
-    
+
     getColor(){
         return this.color;
     }
 
     setName(n){
         this.name = n;
+        this.autoResize();
     }
 
     getName(){
-        return name;
+        return this.name;
+    }
+
+    getMethods(){
+        return this.methods;
+    }
+
+    setMethods(m){
+        this.methods = m;
+        this.autoResize();
+    }
+    
+    autoResize(){
+        this.height = this.methods.split(/\n|\r/).length*18+45;
     }
 }
